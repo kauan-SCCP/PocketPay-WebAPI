@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\caioo\\Desktop\\PocketPay\\backend\\pocketpay\\pocketpay.csproj": {}
+    "C:\\Users\\caioo\\Desktop\\PocketPay\\backend\\pocketpay\\pocketpay.csproj": {}
   },
   "projects": {
-    "c:\\Users\\caioo\\Desktop\\PocketPay\\backend\\pocketpay\\pocketpay.csproj": {
+    "C:\\Users\\caioo\\Desktop\\PocketPay\\backend\\pocketpay\\pocketpay.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\caioo\\Desktop\\PocketPay\\backend\\pocketpay\\pocketpay.csproj",
+        "projectUniqueName": "C:\\Users\\caioo\\Desktop\\PocketPay\\backend\\pocketpay\\pocketpay.csproj",
         "projectName": "pocketpay",
-        "projectPath": "c:\\Users\\caioo\\Desktop\\PocketPay\\backend\\pocketpay\\pocketpay.csproj",
+        "projectPath": "C:\\Users\\caioo\\Desktop\\PocketPay\\backend\\pocketpay\\pocketpay.csproj",
         "packagesPath": "C:\\Users\\caioo\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\caioo\\Desktop\\PocketPay\\backend\\pocketpay\\obj\\",
+        "outputPath": "C:\\Users\\caioo\\Desktop\\PocketPay\\backend\\pocketpay\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\caioo\\AppData\\Roaming\\NuGet\\NuGet.Config"

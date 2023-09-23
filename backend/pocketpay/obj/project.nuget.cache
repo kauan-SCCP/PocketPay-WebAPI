@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "WczbbhqeF93Rv/W+mncYkNWuMHenIBXiqqJ6Ns+cQdZfHy/O7sHaslad43huQDh5WroZYYePWpktJsQ6f0fJUQ==",
+  "dgSpecHash": "/IxbZPrmsM1GR/x47bDQIrMV/y8T0Fds3Wx2g+zjn0XM36/xPGhVIUdvcrnpPvIehVnJD+rYr4LUrjXJ7hAS0A==",
   "success": true,
-  "projectFilePath": "c:\\Users\\caioo\\Desktop\\PocketPay\\backend\\pocketpay\\pocketpay.csproj",
+  "projectFilePath": "C:\\Users\\caioo\\Desktop\\PocketPay\\backend\\pocketpay\\pocketpay.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\caioo\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\caioo\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.10\\microsoft.aspnetcore.openapi.7.0.10.nupkg.sha512",
