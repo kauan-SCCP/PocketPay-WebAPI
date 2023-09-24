@@ -10,6 +10,7 @@ public class BankContext : DbContext
     public DbSet<VendorModel> Vendors {get; set;}
 
     public DbSet<WalletModel> Wallet { get; set;}
+    public DbSet<TransactionModel> Transaction { get; set;}
 
     protected override void OnConfiguring(DbContextOptionsBuilder options) 
     {

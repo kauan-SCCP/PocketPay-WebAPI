@@ -262,7 +262,7 @@
           }
         }
       },
-      "Microsoft.AspNetCore.OpenApi/7.0.11": {
+      "Microsoft.AspNetCore.OpenApi/7.0.10": {
         "type": "package",
         "dependencies": {
           "Microsoft.OpenApi": "1.4.3"
@@ -1489,10 +1489,10 @@
         "microsoft.aspnetcore.http.features.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.OpenApi/7.0.11": {
-      "sha512": "+3PUTx950QiUzw9CriQfCpfv11cJ0uMzQrDS3BwkEDlRduAh/2+1mxDy2S8wS1j3zyQpjbtQU0fFeWTU8j0Ljg==",
+    "Microsoft.AspNetCore.OpenApi/7.0.10": {
+      "sha512": "p5LiYt1mFJdS70zyHoydahohko2pLIoXiXwANRZGYYyTXcYNQpNUOt+At+lUgGgRwta28sUKVhy2W/93j0qwhA==",
       "type": "package",
-      "path": "microsoft.aspnetcore.openapi/7.0.11",
+      "path": "microsoft.aspnetcore.openapi/7.0.10",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1500,7 +1500,7 @@
         "THIRD-PARTY-NOTICES.TXT",
         "lib/net7.0/Microsoft.AspNetCore.OpenApi.dll",
         "lib/net7.0/Microsoft.AspNetCore.OpenApi.xml",
-        "microsoft.aspnetcore.openapi.7.0.11.nupkg.sha512",
+        "microsoft.aspnetcore.openapi.7.0.10.nupkg.sha512",
         "microsoft.aspnetcore.openapi.nuspec"
       ]
     },
@@ -3098,8 +3098,7 @@
       "BCrypt.Net-Next >= 4.0.3",
       "Microsoft.AspNetCore.Authentication >= 2.2.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 7.0.11",
-      "Microsoft.AspNetCore.OpenApi >= 7.0.11",
-      "Microsoft.EntityFrameworkCore >= 7.0.11",
+      "Microsoft.AspNetCore.OpenApi >= 7.0.10",
       "Microsoft.EntityFrameworkCore.Design >= 7.0.11",
       "Microsoft.EntityFrameworkCore.Sqlite >= 7.0.11",
       "Swashbuckle.AspNetCore >= 6.5.0"
@@ -3158,11 +3157,7 @@
           },
           "Microsoft.AspNetCore.OpenApi": {
             "target": "Package",
-            "version": "[7.0.11, )"
-          },
-          "Microsoft.EntityFrameworkCore": {
-            "target": "Package",
-            "version": "[7.0.11, )"
+            "version": "[7.0.10, )"
           },
           "Microsoft.EntityFrameworkCore.Design": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",

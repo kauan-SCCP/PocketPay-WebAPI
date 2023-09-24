@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "E4hwY3U1LkRRZG1RCdBJtFN9fr3dJMqMQmfiz9GVnK5QgI7Vo4ifpJtYgzoZzXLI5XzNDf9O7B7/vyuTVeXhVA==",
+  "dgSpecHash": "/rGWGTghU6VmIUxsPjJWkWWMEZ0lXQlFOZN1OzImoOtH17332kFCg7vq0mGXRYYq7nb6lxi92mmWXTKVB6IGiQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Win10Pro\\Desktop\\PocketPay\\backend\\pocketpay\\pocketpay.csproj",
   "expectedPackageFiles": [
@@ -19,7 +19,7 @@
     "C:\\Users\\Win10Pro\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\Win10Pro\\.nuget\\packages\\microsoft.aspnetcore.http.extensions\\2.2.0\\microsoft.aspnetcore.http.extensions.2.2.0.nupkg.sha512",
     "C:\\Users\\Win10Pro\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.2.0\\microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",
-    "C:\\Users\\Win10Pro\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.11\\microsoft.aspnetcore.openapi.7.0.11.nupkg.sha512",
+    "C:\\Users\\Win10Pro\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.10\\microsoft.aspnetcore.openapi.7.0.10.nupkg.sha512",
     "C:\\Users\\Win10Pro\\.nuget\\packages\\microsoft.aspnetcore.webutilities\\2.2.0\\microsoft.aspnetcore.webutilities.2.2.0.nupkg.sha512",
     "C:\\Users\\Win10Pro\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\Win10Pro\\.nuget\\packages\\microsoft.data.sqlite.core\\7.0.11\\microsoft.data.sqlite.core.7.0.11.nupkg.sha512",
