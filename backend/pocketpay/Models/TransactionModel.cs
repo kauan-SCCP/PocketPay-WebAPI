@@ -8,9 +8,9 @@ namespace pocketpay.Models
     {
         [Key]
         public Guid Id { get; set; }
-        public AccountModel From { get; set; }
-        public AccountModel To { get; set; }    
+        public AccountModel? From { get; set; }
+        public AccountModel? To { get; set; }    
         public DateTime TimeStamp { get; set; }
-        public Double Value { get; set; }
+        public double Value { get; set; }
     }
 }
