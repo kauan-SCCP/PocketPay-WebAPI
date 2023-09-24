@@ -1,0 +1,246 @@
+{
+	"info": {
+		"_postman_id": "74e9fd55-ace0-4af6-98b2-19efbbbeec0f",
+		"name": "PocketPay",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27995767"
+	},
+	"item": [
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "v1",
+					"item": [
+						{
+							"name": "client",
+							"item": [
+								{
+									"name": "Register",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"João\",\r\n    \"surname\": \"Gostosinho\",\r\n    \"cpf\":\"12345678\",\r\n    \"email\": \"aiparachavinho@gmail.com\",\r\n    \"password\": \"12345\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5255/api/v1/client/register",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5255",
+											"path": [
+												"api",
+												"v1",
+												"client",
+												"register"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Login",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"email\": \"aiparachavinho@gmail.com\",\r\n    \"password\": \"12345\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5255/api/v1/client/login",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5255",
+											"path": [
+												"api",
+												"v1",
+												"client",
+												"login"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "seller",
+							"item": [
+								{
+									"name": "Register",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"Kauan\",\r\n    \"surname\": \"Gostosinho\",\r\n    \"cnpj\": \"12346789\",\r\n    \"email\": \"vinicius_o_grande@gmail.com\",\r\n    \"password\": \"12345\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5255/api/v1/seller/register",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5255",
+											"path": [
+												"api",
+												"v1",
+												"seller",
+												"register"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Login",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"email\": \"vinicius_o_grande@gmail.com\",\r\n    \"password\": \"12345\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5255/api/v1/seller/login",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5255",
+											"path": [
+												"api",
+												"v1",
+												"seller",
+												"login"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "profile",
+							"item": [
+								{
+									"name": "Get Profile",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{access_token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:5255/api/v1/users/profile",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5255",
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"profile"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "transaction",
+							"item": [
+								{
+									"name": "Get User Transactions",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "{{access_token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:5255/api/v1/transaction",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5255",
+											"path": [
+												"api",
+												"v1",
+												"transaction"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "access_token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
