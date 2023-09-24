@@ -1,21 +1,29 @@
 
 using Microsoft.EntityFrameworkCore;
 
-public class VendorRepository : IVendorRepository
+public class SellerRepository : ISellerRepository
 {
     private readonly BankContext _context;
 
-    public VendorRepository(BankContext context)
+    public SellerRepository(BankContext context)
     {
         _context = context;
-    
     }
 
-    public async Task<VendorModel> Create(AccountModel account, string name, string surname, string cpnj)
+    public async Task<VendorModel> Create(string email, string password, string name, string surname, string cpnj)
     {
+        var newAccount = new AccountModel();
+        
+        newAccount.Email = email;
+        newAccount.Password = BCrypt.Net.BCrypt.HashPassword(password);
+        newAccount.Role = "Seller";
+
+        await _context.AddAsync(newAccount);
+        await _context.SaveChangesAsync();
+
         var newVendor = new VendorModel();
         newVendor.Id = new Guid();
-        newVendor.Account = account;
+        newVendor.Account = newAccount;
         newVendor.Name = name;
         newVendor.Surname = surname;
         newVendor.CPNJ = cpnj;
@@ -35,23 +43,17 @@ public class VendorRepository : IVendorRepository
         return vendor;
     }
 
-    public async Task<VendorModel> GetByEmail(String email)
+    public async Task<VendorModel> GetByEmail(string email)
     {
 
         var vendor = await  _context.Vendors
             .Include(vendor => vendor.Account)
             .FirstOrDefaultAsync(vendor => vendor.Account.Email == email);
 
-        /*
-        var vendor = await _context.Vendors.FirstOrDefaultAsync(
-            vendor => vendor.Account.Email == email
-        );
-        */
-
         return vendor;
     }
 
-    public async Task<VendorModel> GetByCNPJ(String cpnj)
+    public async Task<VendorModel> GetByCNPJ(string cpnj)
     {
         var vendor = await _context.Vendors.FirstOrDefaultAsync(
             vendor => vendor.CPNJ == cpnj

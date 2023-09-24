@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 
-public class UserProfileResponse
+public class ClientProfileResponse
 {
     public string? name {get; set;}
     public string? surname {get; set;}

@@ -1,5 +1,5 @@
 
-public class UserLoginRequest
+public class ClientLoginRequest
 {
     public string? email {get; set;}
     public string? password {get; set;}

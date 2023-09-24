@@ -2,20 +2,20 @@
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
-[Route("api/v1/vendors")]
-public class VendorController : ControllerBase
+[Route("api/v1/seller")]
+public class SellerController : ControllerBase
 {
-    private readonly IVendorRepository vendorRepository;
+    private readonly ISellerRepository sellerRepository;
     private readonly IAccountRepository accountRepository;
 
-    public VendorController(IVendorRepository vendor_repository, IAccountRepository account_repository)
+    public SellerController(ISellerRepository sellerRepository, IAccountRepository accountRepository)
     {
-        vendorRepository = vendor_repository;
-        accountRepository = account_repository;
+        this.sellerRepository = sellerRepository;
+        this.accountRepository = accountRepository;
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> login(VendorLoginRequest data)
+    public async Task<IActionResult> Login(VendorLoginRequest data)
     {
         
         if (data.email == null || data.password == null)
@@ -24,7 +24,7 @@ public class VendorController : ControllerBase
         }
         
         
-        var vendor = await vendorRepository.GetByEmail(data.email);
+        var vendor = await sellerRepository.GetByEmail(data.email);
 
         if (vendor == null || vendor.Account == null || !BCrypt.Net.BCrypt.Verify(data.password, vendor.Account.Password)) {
             
@@ -38,23 +38,23 @@ public class VendorController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> register(VendorRegisterRequest data)
+    public async Task<IActionResult> Register(VendorRegisterRequest data)
     {
         if (data.email == null || data.password == null || data.cnpj == null || data.name == null || data.surname == null)
         {
             return BadRequest();
         }
 
-        if (await vendorRepository.GetByEmail(data.email) != null || await vendorRepository.GetByCNPJ(data.cnpj) != null)
+        if (await sellerRepository.GetByEmail(data.email) != null || await sellerRepository.GetByCNPJ(data.cnpj) != null)
         {
+            Console.WriteLine("bunda 2");
             return BadRequest();
         }
 
-        var account = await accountRepository.Create(data.email, data.password, "Vendor");
-        var vendor = await vendorRepository.Create(account, data.name, data.surname, data.cnpj);
+        var vendor = await sellerRepository.Create(data.email, data.password, data.name, data.surname, data.cnpj);
         
         var responseBody = new AuthResponse();
-        responseBody.access_token = AuthenticationService.createToken(account);
+        responseBody.access_token = AuthenticationService.createToken(vendor.Account);
 
         return Ok(responseBody);
     }

@@ -8,7 +8,7 @@ namespace pocketpay.Models
     {
         [Key]
         public Guid Id { get; set; }
-        public AccountModel Account { get; set; }   
+        public AccountModel? Account { get; set; }   
         public double Balance { get; set; }
     }
 }

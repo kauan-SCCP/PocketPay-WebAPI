@@ -2,12 +2,13 @@
 using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
+using pocketpay.Models;
 
-public class UserRepository : IUserRepository
+public class ClientRepository : IClientRepository
 {
     private readonly BankContext _context;
 
-    public UserRepository(BankContext context)
+    public ClientRepository(BankContext context)
     {
         _context = context;
     }
@@ -17,9 +18,8 @@ public class UserRepository : IUserRepository
         newAccount.Id = new Guid();
         newAccount.Email = email;
         newAccount.Password = BCrypt.Net.BCrypt.HashPassword(password);
-        newAccount.Role = "User";
+        newAccount.Role = "Client";
         await _context.AddAsync(newAccount);
-        await _context.SaveChangesAsync();
 
         var newUser = new UserModel();
         newUser.Id = new Guid();
@@ -27,8 +27,14 @@ public class UserRepository : IUserRepository
         newUser.Surname = surname;
         newUser.CPF = cpf;
         newUser.Account = newAccount;
-
         await _context.AddAsync(newUser);
+
+        var newWallet = new WalletModel();
+        newWallet.Id = new Guid();
+        newWallet.Balance = 0;
+        newWallet.Account = newAccount;
+        await _context.AddAsync(newWallet);
+        
         await _context.SaveChangesAsync();
 
         return newUser;

@@ -1,4 +1,4 @@
-public interface IUserRepository
+public interface IClientRepository
 {
     public Task<UserModel> Create(string email, string password, string name, string surname, string cpf);
     public Task<UserModel> GetById(Guid id);
