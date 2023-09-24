@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using pocketpay.Models;
 
 public class BankContext : DbContext
 {
@@ -7,6 +8,9 @@ public class BankContext : DbContext
     public DbSet<AccountModel> Accounts {get; set;}
     public DbSet<UserModel> Users {get; set;}
     public DbSet<VendorModel> Vendors {get; set;}
+
+    public DbSet<WalletModel> Wallet { get; set;}
+    public DbSet<TransactionModel> Transaction { get; set;}
 
     protected override void OnConfiguring(DbContextOptionsBuilder options) 
     {

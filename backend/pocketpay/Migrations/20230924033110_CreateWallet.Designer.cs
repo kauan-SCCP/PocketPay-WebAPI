@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace pocketpay.Migrations
 {
     [DbContext(typeof(BankContext))]
-    partial class BankContextModelSnapshot : ModelSnapshot
+    [Migration("20230924033110_CreateWallet")]
+    partial class CreateWallet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.11");
@@ -86,33 +89,6 @@ namespace pocketpay.Migrations
                     b.ToTable("Vendor");
                 });
 
-            modelBuilder.Entity("pocketpay.Models.TransactionModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("FromId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("TimeStamp")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("ToId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<double>("Value")
-                        .HasColumnType("REAL");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FromId");
-
-                    b.HasIndex("ToId");
-
-                    b.ToTable("Transaction");
-                });
-
             modelBuilder.Entity("pocketpay.Models.WalletModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -148,25 +124,6 @@ namespace pocketpay.Migrations
                         .HasForeignKey("AccountId");
 
                     b.Navigation("Account");
-                });
-
-            modelBuilder.Entity("pocketpay.Models.TransactionModel", b =>
-                {
-                    b.HasOne("AccountModel", "From")
-                        .WithMany()
-                        .HasForeignKey("FromId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AccountModel", "To")
-                        .WithMany()
-                        .HasForeignKey("ToId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("From");
-
-                    b.Navigation("To");
                 });
 
             modelBuilder.Entity("pocketpay.Models.WalletModel", b =>

@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\caioo\\Desktop\\PocketPay\\backend\\pocketpay\\pocketpay.csproj": {}
+    "C:\\Users\\Win10Pro\\Desktop\\PocketPay\\backend\\pocketpay\\pocketpay.csproj": {}
   },
   "projects": {
-    "C:\\Users\\caioo\\Desktop\\PocketPay\\backend\\pocketpay\\pocketpay.csproj": {
+    "C:\\Users\\Win10Pro\\Desktop\\PocketPay\\backend\\pocketpay\\pocketpay.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\caioo\\Desktop\\PocketPay\\backend\\pocketpay\\pocketpay.csproj",
+        "projectUniqueName": "C:\\Users\\Win10Pro\\Desktop\\PocketPay\\backend\\pocketpay\\pocketpay.csproj",
         "projectName": "pocketpay",
-        "projectPath": "C:\\Users\\caioo\\Desktop\\PocketPay\\backend\\pocketpay\\pocketpay.csproj",
-        "packagesPath": "C:\\Users\\caioo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\caioo\\Desktop\\PocketPay\\backend\\pocketpay\\obj\\",
+        "projectPath": "C:\\Users\\Win10Pro\\Desktop\\PocketPay\\backend\\pocketpay\\pocketpay.csproj",
+        "packagesPath": "C:\\Users\\Win10Pro\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Win10Pro\\Desktop\\PocketPay\\backend\\pocketpay\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\caioo\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Win10Pro\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
