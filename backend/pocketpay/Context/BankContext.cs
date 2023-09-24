@@ -6,6 +6,7 @@ public class BankContext : DbContext
 
     public DbSet<AccountModel> Accounts {get; set;}
     public DbSet<UserModel> Users {get; set;}
+    public DbSet<VendorModel> Vendors {get; set;}
 
     protected override void OnConfiguring(DbContextOptionsBuilder options) 
     {

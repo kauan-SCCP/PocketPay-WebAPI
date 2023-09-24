@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 [ApiController]
-[Route("api/users")]
+[Route("api/v1/users")]
 public class UserController : ControllerBase
 {
     private readonly IUserRepository userRepository;
@@ -27,8 +27,9 @@ public class UserController : ControllerBase
             return Forbid();
         }
         
-        var token = AuthenticationService.createToken(account);
-        return Ok(token);
+        var responseBody = new AuthResponse();
+        responseBody.access_token = AuthenticationService.createToken(account);
+        return Ok(responseBody);
     }
 
     [HttpPost("register")]
@@ -41,8 +42,8 @@ public class UserController : ControllerBase
             return BadRequest();
         }
 
-        var token = AuthenticationService.createToken(user.Account);
-        return Ok(token);
-        
+        var responseBody = new AuthResponse();
+        responseBody.access_token = AuthenticationService.createToken(user.Account);
+        return Ok(responseBody);
     }
 }

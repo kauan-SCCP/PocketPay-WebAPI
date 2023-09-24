@@ -14,7 +14,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<BankContext>();
 
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IVendorRepository, VendorRepository>();
 
 // Configurando a autenticação
 var key = Encoding.ASCII.GetBytes(AuthenticationService.secret);
