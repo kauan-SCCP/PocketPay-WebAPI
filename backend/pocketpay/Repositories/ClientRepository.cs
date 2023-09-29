@@ -1,8 +1,4 @@
-
-using System.Runtime.CompilerServices;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
-using pocketpay.Models;
 
 public class ClientRepository : IClientRepository
 {
@@ -13,89 +9,73 @@ public class ClientRepository : IClientRepository
         _context = context;
     }
 
-    public async Task<UserModel> Create(string email, string password, string name, string surname, string cpf) {
-        var newAccount = new AccountModel();
-        newAccount.Id = new Guid();
-        newAccount.Email = email;
-        newAccount.Password = BCrypt.Net.BCrypt.HashPassword(password);
-        newAccount.Role = "Client";
-        await _context.AddAsync(newAccount);
-
-        var newUser = new UserModel();
-        newUser.Id = new Guid();
-        newUser.Name = name;
-        newUser.Surname = surname;
-        newUser.CPF = cpf;
-        newUser.Account = newAccount;
-        await _context.AddAsync(newUser);
-
-        var newWallet = new WalletModel();
-        newWallet.Id = new Guid();
-        newWallet.Balance = 0;
-        newWallet.Account = newAccount;
-        await _context.AddAsync(newWallet);
+    public async Task<ClientModel> Create(AccountModel account, string name, string surname, string cpf)
+    {
+        var newClient = new ClientModel();
         
+        newClient.Id = new Guid();
+        newClient.Account = account;
+        newClient.Name = name;
+        newClient.Surname = surname;
+        newClient.CPF = cpf;
+
+        await _context.AddAsync(newClient);
         await _context.SaveChangesAsync();
 
-        return newUser;
+        return newClient;
     }
 
-    public async Task<UserModel> GetById(Guid id)
+    public async Task<ClientModel?> FindById(Guid id)
     {
-        var user = await _context.Users.FirstOrDefaultAsync( 
-            user => user.Id == id
-        );
+        var client = await _context.Clients
+            .Include(client => client.Account)
+            .FirstOrDefaultAsync(client => client.Id == id);
 
-        return user;
+        return client;
     }
 
-    public async Task<UserModel> GetByEmail(string email)
+    public async Task<ClientModel?> FindByCPF(string cpf)
     {
-        var user = await  _context.Users
-            .Include(user => user.Account)
-            .FirstOrDefaultAsync(user => user.Account.Email == email);
+        var client = await _context.Clients
+            .Include(client => client.Account)
+            .FirstOrDefaultAsync(client => client.CPF == cpf);
         
-        return user;
+        return client;
     }
 
-    public async Task<UserModel> GetByCPF(string cpf)
+    public async Task<ClientModel?> FindByAccount(AccountModel account)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(
-            user => user.CPF == cpf
-        );
+        var client = await _context.Clients
+            .Include(client => client.Account)
+            .FirstOrDefaultAsync(client => client.Account == account);
 
-        return user;
+        return client;
     }
 
-    public async Task<UserModel> UpdateById(Guid id, AccountModel account, string name, string surname, string cpf)
+    public async Task<ClientModel?> Update(Guid id, AccountModel account, string name, string surname, string cpf)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(
-            user => user.Id == id
-        );
+        var client = await FindById(id);
 
-        if (user == null) {return null;}
+        if (client == null) {return null;}
 
-        user.Account = account;
-        user.Name = name;
-        user.Surname = surname;
-        user.CPF = cpf;
-
+        client.Account = account;
+        client.Name = name;
+        client.Surname = surname;
+        client.CPF = cpf;
         await _context.SaveChangesAsync();
 
-        return user;
+        return client;
     }
 
-    public async Task<UserModel> Delete(Guid id)
+    public async Task<ClientModel?> Delete(Guid id)
     {
-        var user = await _context.Users.FirstOrDefaultAsync( 
-            user => user.Id == id
-        );
+        var client = await FindById(id);
+        if (client == null) {return null;}
 
-        if (user == null) {return null;}
+        _context.Remove(client);
+        await _context.SaveChangesAsync();
 
-        _context.Remove(user);
-
-        return user;
+        return client;
     }
 
 }

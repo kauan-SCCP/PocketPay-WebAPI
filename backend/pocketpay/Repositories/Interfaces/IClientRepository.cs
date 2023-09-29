@@ -1,9 +1,9 @@
 public interface IClientRepository
 {
-    public Task<UserModel> Create(string email, string password, string name, string surname, string cpf);
-    public Task<UserModel> GetById(Guid id);
-    public Task<UserModel> GetByEmail(string email);
-    public Task<UserModel> GetByCPF(string cpf);
-    public Task<UserModel> UpdateById(Guid id, AccountModel account, string name, string surname, string cpf);
-    public Task<UserModel> Delete(Guid id);
+    public Task<ClientModel> Create(AccountModel account, string name, string surname, string cpf);
+    public Task<ClientModel?> FindById(Guid id);
+    public Task<ClientModel?> FindByCPF(string cpf);
+    public Task<ClientModel?> FindByAccount(AccountModel account);
+    public Task<ClientModel?> Update(Guid id, AccountModel account, string name, string surname, string cpf);
+    public Task<ClientModel?> Delete(Guid id);
 }

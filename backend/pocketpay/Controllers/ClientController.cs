@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 [ApiController]
 [Route("api/v1/client")]
@@ -20,17 +22,21 @@ public class ClientController : ControllerBase
         {
             return BadRequest();
         }
+        
 
-        var account = await accountRepository.GetByEmail(data.email);
+        var account = await accountRepository.FindByEmail(data.email);
 
         if (account == null || !BCrypt.Net.BCrypt.Verify(data.password, account.Password))
         {
             return Forbid();
 
         }
+
+        var responseBody = new AuthResponse
+        {
+            access_token = AuthenticationService.createToken(account)
+        };
         
-        var responseBody = new AuthResponse();
-        responseBody.access_token = AuthenticationService.createToken(account);
         return Ok(responseBody);
     }
 
@@ -42,16 +48,21 @@ public class ClientController : ControllerBase
             return BadRequest();
         }
 
-        if (await clientRepository.GetByEmail(data.email) != null | await clientRepository.GetByCPF(data.cpf) != null)
-        {
+        if (await accountRepository.FindByEmail(data.email) != null || await clientRepository.FindByCPF(data.cpf) != null) {
             return BadRequest();
         }
-        
-        await clientRepository.Create(data.email, data.password, data.name, data.surname, data.cpf);
-        var user = await clientRepository.GetByEmail(data.email);
 
-        var responseBody = new AuthResponse();
-        responseBody.access_token = AuthenticationService.createToken(user.Account);
-        return Ok(responseBody);
+        var newAccount = await accountRepository.Create(data.email, data.password, AccountRole.Client);
+        var newClient = await clientRepository.Create(newAccount, data.name, data.surname, data.cpf);
+        
+        var responseBody = new ClientRegisterResponse()
+        {
+            name = newClient.Name,
+            surname = newClient.Surname,
+            email = newAccount.Email,
+            cpf = newClient.CPF
+        };
+
+        return Created("/login", responseBody);
     }
 }

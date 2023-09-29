@@ -28,15 +28,15 @@ namespace pocketpay.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Role")
-                        .HasColumnType("TEXT");
+                    b.Property<int?>("Role")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
                     b.ToTable("Account");
                 });
 
-            modelBuilder.Entity("UserModel", b =>
+            modelBuilder.Entity("ClientModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -58,10 +58,10 @@ namespace pocketpay.Migrations
 
                     b.HasIndex("AccountId");
 
-                    b.ToTable("User");
+                    b.ToTable("Client");
                 });
 
-            modelBuilder.Entity("VendorModel", b =>
+            modelBuilder.Entity("SellerModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -83,7 +83,7 @@ namespace pocketpay.Migrations
 
                     b.HasIndex("AccountId");
 
-                    b.ToTable("Vendor");
+                    b.ToTable("Seller");
                 });
 
             modelBuilder.Entity("pocketpay.Models.TransactionModel", b =>
@@ -119,7 +119,7 @@ namespace pocketpay.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("AccountId")
+                    b.Property<Guid?>("AccountId")
                         .HasColumnType("TEXT");
 
                     b.Property<double>("Balance")
@@ -132,7 +132,7 @@ namespace pocketpay.Migrations
                     b.ToTable("Wallet");
                 });
 
-            modelBuilder.Entity("UserModel", b =>
+            modelBuilder.Entity("ClientModel", b =>
                 {
                     b.HasOne("AccountModel", "Account")
                         .WithMany()
@@ -141,7 +141,7 @@ namespace pocketpay.Migrations
                     b.Navigation("Account");
                 });
 
-            modelBuilder.Entity("VendorModel", b =>
+            modelBuilder.Entity("SellerModel", b =>
                 {
                     b.HasOne("AccountModel", "Account")
                         .WithMany()
@@ -173,9 +173,7 @@ namespace pocketpay.Migrations
                 {
                     b.HasOne("AccountModel", "Account")
                         .WithMany()
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AccountId");
 
                     b.Navigation("Account");
                 });

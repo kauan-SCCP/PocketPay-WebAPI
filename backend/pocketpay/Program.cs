@@ -16,7 +16,7 @@ builder.Services.AddDbContext<BankContext>();
 
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
-builder.Services.AddScoped<ISellerRepository, SellerRepository>();
+// builder.Services.AddScoped<ISellerRepository, SellerRepository>();
 
 // Configurando a autenticação
 var key = Encoding.ASCII.GetBytes(AuthenticationService.secret);

@@ -6,11 +6,11 @@ public class BankContext : DbContext
     private readonly string DbPath = "./Database/Bank.sqlite3";
 
     public DbSet<AccountModel> Accounts {get; set;}
-    public DbSet<UserModel> Users {get; set;}
-    public DbSet<VendorModel> Vendors {get; set;}
+    public DbSet<ClientModel> Clients {get; set;}
+    public DbSet<SellerModel> Sellers {get; set;}
 
-    public DbSet<WalletModel> Wallet { get; set;}
-    public DbSet<TransactionModel> Transaction { get; set;}
+    public DbSet<WalletModel> Wallets {get; set;}
+    public DbSet<TransactionModel> Transactions {get; set;}
 
     protected override void OnConfiguring(DbContextOptionsBuilder options) 
     {

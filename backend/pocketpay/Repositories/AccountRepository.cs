@@ -11,7 +11,7 @@ public class AccountRepository : IAccountRepository
         _context = context;
     }
 
-    public async Task<AccountModel> Create(string email, string password, string role)
+    public async Task<AccountModel> Create(string email, string password, AccountRole role)
     {
         var newAccount = new AccountModel();
         
@@ -25,13 +25,13 @@ public class AccountRepository : IAccountRepository
         return newAccount;
     }
 
-    public async Task<AccountModel> GetById(Guid id)
+    public async Task<AccountModel?> FindById(Guid id)
     {
         var account = await _context.Accounts.FindAsync(id);
         return account;
     }
 
-    public async Task<AccountModel> GetByEmail(string email)
+    public async Task<AccountModel?> FindByEmail(string email)
     {
         var account = await _context.Accounts.FirstOrDefaultAsync(
             account => account.Email == email
@@ -40,7 +40,7 @@ public class AccountRepository : IAccountRepository
         return account;
     }
 
-    public async Task<AccountModel> UpdateById(Guid id, string email, string password, string role)
+    public async Task<AccountModel?> Update(Guid id, string email, string password, AccountRole role)
     {
         var account = await _context.Accounts.FindAsync(id);
         if (account == null) {return null;}
@@ -53,7 +53,7 @@ public class AccountRepository : IAccountRepository
         return account;
     }
 
-    public async Task<AccountModel> Delete(Guid id)
+    public async Task<AccountModel?> Delete(Guid id)
     {
         var account = await _context.Accounts.FindAsync(id);
         if (account == null) {return null;}
@@ -62,6 +62,4 @@ public class AccountRepository : IAccountRepository
 
         return account;
     }
-
-
 }

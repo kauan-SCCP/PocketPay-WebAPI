@@ -13,11 +13,13 @@ public class AuthenticationService
             var key = Encoding.ASCII.GetBytes(secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
+                
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, account.Email.ToString()),
+                    new Claim(ClaimTypes.Name, account.Email),
                     new Claim(ClaimTypes.Role, account.Role.ToString())
                 }),
+
                 Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
