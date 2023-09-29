@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "w/IWyqQzIuevazKqoI2cZmZldLQOI2k9VT+YUPtElXszIlEtQyt/sfuf4GI5Rh6Vt1QC1xGEjK0F50FhBOrnSA==",
+  "dgSpecHash": "BjqXOgd1a4olC9M6nHLur1mF7OMLKcxbU3YlP1OX2DXxxk/iXpUpOfhXJJNco/jDvLw9Jtw2nR6QK5ZBkhiCiQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\caioo\\Desktop\\PocketPay\\backend\\pocketpay\\pocketpay.csproj",
+  "projectFilePath": "c:\\Users\\caioo\\Desktop\\pocketpay\\backend\\pocketpay\\pocketpay.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\caioo\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\caioo\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
