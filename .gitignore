@@ -756,3 +756,5 @@ obj/
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/csharp,dotnetcore,aspnetcore,visualstudio,visualstudiocode,angular
+backend/pocketpay/obj/pocketpay.csproj.nuget.dgspec.json
+backend/pocketpay/obj/project.nuget.cache
