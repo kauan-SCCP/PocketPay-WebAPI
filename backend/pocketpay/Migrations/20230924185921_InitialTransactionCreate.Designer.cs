@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace pocketpay.Migrations
 {
     [DbContext(typeof(BankContext))]
-    partial class BankContextModelSnapshot : ModelSnapshot
+    [Migration("20230924185921_InitialTransactionCreate")]
+    partial class InitialTransactionCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.11");
@@ -28,15 +31,15 @@ namespace pocketpay.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("Role")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Role")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.ToTable("Account");
                 });
 
-            modelBuilder.Entity("ClientModel", b =>
+            modelBuilder.Entity("UserModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -58,10 +61,10 @@ namespace pocketpay.Migrations
 
                     b.HasIndex("AccountId");
 
-                    b.ToTable("Client");
+                    b.ToTable("User");
                 });
 
-            modelBuilder.Entity("SellerModel", b =>
+            modelBuilder.Entity("VendorModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -83,7 +86,7 @@ namespace pocketpay.Migrations
 
                     b.HasIndex("AccountId");
 
-                    b.ToTable("Seller");
+                    b.ToTable("Vendor");
                 });
 
             modelBuilder.Entity("pocketpay.Models.TransactionModel", b =>
@@ -132,7 +135,7 @@ namespace pocketpay.Migrations
                     b.ToTable("Wallet");
                 });
 
-            modelBuilder.Entity("ClientModel", b =>
+            modelBuilder.Entity("UserModel", b =>
                 {
                     b.HasOne("AccountModel", "Account")
                         .WithMany()
@@ -141,7 +144,7 @@ namespace pocketpay.Migrations
                     b.Navigation("Account");
                 });
 
-            modelBuilder.Entity("SellerModel", b =>
+            modelBuilder.Entity("VendorModel", b =>
                 {
                     b.HasOne("AccountModel", "Account")
                         .WithMany()
