@@ -3,14 +3,12 @@ using pocketpay.Models;
 
 public class WalletRepository : IWalletRepository
 {
-    private IAccountRepository _accountRepository;
     private BankContext _context;
 
     //Acessa o BankContext para retornar uma cópia do contexto por injeção de dependência.
-    public WalletRepository(BankContext context, IAccountRepository accountRepository) 
+    public WalletRepository(BankContext context) 
     {
         _context = context;
-        _accountRepository = accountRepository;
     }
 
     public async Task<WalletModel> Create(AccountModel account)
