@@ -41,7 +41,7 @@ public class WalletController : ControllerBase
     }
 
 
-    [HttpPost("/deposit")]
+    [HttpPut("deposit")]
     [Authorize]
     public async Task<IActionResult> Deposit(WalletDepositRequest data)
     {
@@ -72,7 +72,7 @@ public class WalletController : ControllerBase
         return Ok(responseBody);
     }
 
-    [HttpPost("/withdraw")]
+    [HttpPut("withdraw")]
     [Authorize]
     public async Task<IActionResult> Withdraw(WalletDepositRequest data)
     {
@@ -88,9 +88,14 @@ public class WalletController : ControllerBase
         }
         var wallet = await _walletRepository.FindByAccount(account);
 
-        if (wallet == null || data.value > wallet.Balance)
+        if (wallet == null)
         {
             return BadRequest();
+        }
+
+        if (data.value > wallet.Balance)
+        {
+            return Forbid();
         }
 
         var walletSave = await _walletRepository.Withdraw(wallet.Id, (double)data.value);

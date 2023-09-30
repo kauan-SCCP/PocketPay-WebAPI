@@ -53,7 +53,7 @@ namespace pocketpay.Migrations
                     AccountId = table.Column<Guid>(type: "TEXT", nullable: true),
                     Name = table.Column<string>(type: "TEXT", nullable: true),
                     Surname = table.Column<string>(type: "TEXT", nullable: true),
-                    CPNJ = table.Column<string>(type: "TEXT", nullable: true)
+                    CNPJ = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -70,8 +70,8 @@ namespace pocketpay.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    FromId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ToId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    FromId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    ToId = table.Column<Guid>(type: "TEXT", nullable: true),
                     TimeStamp = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Value = table.Column<double>(type: "REAL", nullable: false)
                 },
@@ -82,14 +82,12 @@ namespace pocketpay.Migrations
                         name: "FK_Transaction_Account_FromId",
                         column: x => x.FromId,
                         principalTable: "Account",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Transaction_Account_ToId",
                         column: x => x.ToId,
                         principalTable: "Account",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(

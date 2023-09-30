@@ -7,14 +7,16 @@ public class SellerController : ControllerBase
 {
     private readonly ISellerRepository sellerRepository;
     private readonly IAccountRepository accountRepository;
+    private readonly IWalletRepository walletRepository;
 
-    public SellerController(ISellerRepository sellerRepository, IAccountRepository accountRepository)
+    public SellerController(ISellerRepository sellerRepository, IAccountRepository accountRepository, IWalletRepository walletRepository)
     {
         this.sellerRepository = sellerRepository;
         this.accountRepository = accountRepository;
+        this.walletRepository = walletRepository;
     }
 
-    [HttpGet("login")]
+    [HttpPost("login")]
     public async Task<IActionResult> Login(SellerLoginRequest data)
     {
         if (data.email == null || data.password == null)
@@ -52,6 +54,8 @@ public class SellerController : ControllerBase
 
         var newAccount = await accountRepository.Create(data.email, data.password, AccountRole.Seller);
         var newSeller = await sellerRepository.Create(newAccount, data.name, data.surname, data.cnpj);
+
+        await walletRepository.Create(newAccount);
 
         var responseBody = new SellerRegisterResponse()
         {

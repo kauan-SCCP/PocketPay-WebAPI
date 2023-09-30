@@ -8,11 +8,13 @@ public class ClientController : ControllerBase
 {
     private readonly IClientRepository clientRepository;
     private readonly IAccountRepository accountRepository;
+    private readonly IWalletRepository walletRepository;
 
-    public ClientController(IClientRepository clientRepository, IAccountRepository accountRepository)
+    public ClientController(IClientRepository clientRepository, IAccountRepository accountRepository, IWalletRepository walletRepository)
     {
         this.clientRepository = clientRepository;
         this.accountRepository = accountRepository;
+        this.walletRepository = walletRepository;
     }
 
     [HttpPost("login")]
@@ -55,6 +57,8 @@ public class ClientController : ControllerBase
 
         var newAccount = await accountRepository.Create(data.email, data.password, AccountRole.Client);
         var newClient = await clientRepository.Create(newAccount, data.name, data.surname, data.cpf);
+        
+        await walletRepository.Create(newAccount);
         
         var responseBody = new ClientRegisterResponse()
         {
