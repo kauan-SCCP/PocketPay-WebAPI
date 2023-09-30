@@ -28,41 +28,43 @@ public class TransactionRepository : ITransactionRepository
         return newTransaction;
     }
 
-    public Task<TransactionModel?> FindByAccount(AccountModel account)
+    public async Task<TransactionModel?> FindByAccount(AccountModel account)
     {
         //Vai ser um HttpGet
-        var transaction = _context.Transactions // passa a tabela para a variavel
+        var transaction = await _context.Transactions // passa a tabela para a variavel
             .Include(transaction => transaction.From) // me traga dessa tabela quem fez a transição
             .FirstOrDefaultAsync(transaction => transaction.From == account); // na tabela tran busque pelo From, se for igual ao parametro é OK
 
         return transaction;
     }
 
-    public Task<TransactionModel?> FindById(Guid id)
+    public async Task<TransactionModel?> FindById(Guid id)
     {
-        var transaction = _context.Transactions
+        var transaction = await _context.Transactions
             .Include(transaction => transaction.Id)
             .FirstOrDefaultAsync(transaction => transaction.Id == id);
 
         return transaction;
     }
 
-    public Task<TransactionModel?> FindByReceiver(AccountModel receiver)
+    public async Task<IEnumerable<TransactionModel>> FindByReceiver(AccountModel receiver)
     {
-        var transaction = _context.Transactions
+        var transaction = await _context.Transactions
             .Include(transaction => transaction.To)
-            .FirstOrDefaultAsync(transaction => transaction.To == receiver);
+            .Where(transaction => transaction.To == receiver)
+            .ToListAsync();
 
         return transaction;
     }
 
-    public Task<TransactionModel?> FindBySender(AccountModel sender)
-    {
-        throw new NotImplementedException();
-    }
 
-    public Task<TransactionModel?> Revert(Guid id)
+    public async Task<IEnumerable<TransactionModel>> FindBySender(AccountModel sender)
     {
-        throw new NotImplementedException();
+        var transaction = await _context.Transactions
+            .Include(transaction => transaction.From)
+            .Where(transaction => transaction.From == sender)
+            .ToListAsync();
+
+        return transaction;
     }
 }
