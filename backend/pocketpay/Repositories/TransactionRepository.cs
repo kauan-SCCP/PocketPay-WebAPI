@@ -1,42 +1,68 @@
 using System.Transactions;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 using pocketpay.Models;
 
 public class TransactionRepository : ITransactionRepository
 {
-    private IAccountRepository _accountRepository;
     private BankContext _context;
-
-    private WalletRepository _walletRepository;
-
-    //Acessa o BankContext para retornar uma cópia do contexto por injeção de dependência.
-    public TransactionRepository(BankContext context, IAccountRepository accountRepository, WalletRepository walletRepository) 
+    public TransactionRepository(BankContext context) 
     {
         _context = context;
-        _accountRepository = accountRepository;
-        _walletRepository = walletRepository;
+     
     }
 
-    //Essa função serve para retornar todas as transações de um usuário através de seu email.
-    public async Task<TransactionModel> CreateTransaction(string from, string to, double value)
+    public async Task<TransactionModel> Create(AccountModel sender, AccountModel receiver, double value)
     {
+        //Vai ser um HttpPost - SaveChangesAsync();
         var newTransaction = new TransactionModel();
-        //Aqui a gente insere o usuário que fará a transferência
-        newTransaction.From = await _accountRepository.GetByEmail(from); 
-        newTransaction.To = await _accountRepository.GetByEmail(to);//Aqui a gente insere o usuário que receberá a transferência
-        newTransaction.TimeStamp = DateTime.Now;
+
+        newTransaction.From = sender;
+        newTransaction.To = receiver;
         newTransaction.Value = value;
-        WalletModel actualFrom = await _walletRepository.getAccountWallet(from);
-        WalletModel actualTo = await _walletRepository.getAccountWallet(to);
-        if (actualFrom.Balance < value)
-        {
-            throw new Exception("Vai trabalhar vagabundo");
-        }
-        actualFrom.Balance += value;
-        actualTo.Balance -= value;
-        await _context.AddAsync(actualFrom);
-        await _context.AddAsync(actualTo);
+        newTransaction.TimeStamp = DateTime.UtcNow;
+
         await _context.AddAsync(newTransaction);
         await _context.SaveChangesAsync();
+
         return newTransaction;
+    }
+
+    public Task<TransactionModel?> FindByAccount(AccountModel account)
+    {
+        //Vai ser um HttpGet
+        var transaction = _context.Transactions // passa a tabela para a variavel
+            .Include(transaction => transaction.From) // me traga dessa tabela quem fez a transi��o
+            .FirstOrDefaultAsync(transaction => transaction.From == account); // na tabela tran busque pelo From, se for igual ao parametro � OK
+
+        return transaction;
+    }
+
+    public Task<TransactionModel?> FindById(Guid id)
+    {
+        var transaction = _context.Transactions
+            .Include(transaction => transaction.Id)
+            .FirstOrDefaultAsync(transaction => transaction.Id == id);
+
+        return transaction;
+    }
+
+    public Task<TransactionModel?> FindByReceiver(AccountModel receiver)
+    {
+        var transaction = _context.Transactions
+            .Include(transaction => transaction.To)
+            .FirstOrDefaultAsync(transaction => transaction.To == receiver);
+
+        return transaction;
+    }
+
+    public Task<TransactionModel?> FindBySender(AccountModel sender)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<TransactionModel?> Revert(Guid id)
+    {
+        throw new NotImplementedException();
     }
 }
