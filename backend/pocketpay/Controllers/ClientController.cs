@@ -48,7 +48,8 @@ public class ClientController : ControllerBase
             return BadRequest();
         }
 
-        if (await accountRepository.FindByEmail(data.email) != null || await clientRepository.FindByCPF(data.cpf) != null) {
+        if (await accountRepository.FindByEmail(data.email) != null || await clientRepository.FindByCPF(data.cpf) != null) 
+        {
             return BadRequest();
         }
 
