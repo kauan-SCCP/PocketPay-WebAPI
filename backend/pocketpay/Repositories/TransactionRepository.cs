@@ -6,6 +6,7 @@ using pocketpay.Models;
 public class TransactionRepository : ITransactionRepository
 {
     private BankContext _context;
+    private readonly WalletRepository _walletRepository;
     public TransactionRepository(BankContext context) 
     {
         _context = context;
@@ -16,7 +17,7 @@ public class TransactionRepository : ITransactionRepository
     {
         //Vai ser um HttpPost - SaveChangesAsync();
         var newTransaction = new TransactionModel();
-
+         
         newTransaction.From = sender;
         newTransaction.To = receiver;
         newTransaction.Value = value;
@@ -56,7 +57,6 @@ public class TransactionRepository : ITransactionRepository
 
         return transaction;
     }
-
 
     public async Task<IEnumerable<TransactionModel>> FindBySender(AccountModel sender)
     {
