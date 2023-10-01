@@ -93,6 +93,11 @@ public class TransactionController : ControllerBase
 
         foreach (TransactionModel T in AllTransaction)
         {
+            if (T.To == null || T.From == null || T.To.Email == null || T.From.Email == null)
+            {
+                return StatusCode(500);
+            }
+            
             var transaction = new TransactionResponse()
             {
                 receiverEmail = T.To.Email,
