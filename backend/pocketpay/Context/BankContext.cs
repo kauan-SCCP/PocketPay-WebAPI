@@ -12,6 +12,8 @@ public class BankContext : DbContext
     public DbSet<WalletModel> Wallets {get; set;}
     public DbSet<TransactionModel> Transactions {get; set;}
 
+    public DbSet<ExternalTransactionModel> ExternalTransactions {get; set;}
+
     protected override void OnConfiguring(DbContextOptionsBuilder options) 
     {
         options.UseSqlite($"Data Source={DbPath}");
