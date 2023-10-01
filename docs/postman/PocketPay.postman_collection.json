@@ -22,7 +22,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"name\": \"João\",\r\n    \"surname\": \"Gostosinho\",\r\n    \"cpf\":\"12345678\",\r\n    \"email\": \"aiparachavinho@gmail.com\",\r\n    \"password\": \"12345\"\r\n}",
+											"raw": "{\r\n    \"name\": \"João\",\r\n    \"surname\": \"Pedro\",\r\n    \"cpf\": \"52634774661123\",\r\n    \"email\": \"ojoaopedro1717@gmail.com\",\r\n    \"password\": \"12345\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -48,12 +48,24 @@
 								},
 								{
 									"name": "Login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.collectionVariables.set(\"access_token\", pm.response.json().access_token);\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
 									"request": {
 										"method": "POST",
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"email\": \"aiparachavinho@gmail.com\",\r\n    \"password\": \"12345\"\r\n}",
+											"raw": "{\r\n    \"email\": \"ojoaopedro1717@gmail.com\",\r\n    \"password\": \"12346\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -89,7 +101,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"name\": \"Kauan\",\r\n    \"surname\": \"Gostosinho\",\r\n    \"cnpj\": \"12346789\",\r\n    \"email\": \"vinicius_o_grande@gmail.com\",\r\n    \"password\": \"12345\"\r\n}",
+											"raw": "{\r\n    \"name\": \"Kauan\",\r\n    \"surname\": \"Gostosinho\",\r\n    \"cnpj\": \"219083920183902190321\",\r\n    \"email\": \"kauangostosinho@gmail.com\",\r\n    \"password\": \"12345\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -115,12 +127,24 @@
 								},
 								{
 									"name": "Login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.collectionVariables.set(\"access_token\", pm.response.json().access_token);\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
 									"request": {
 										"method": "POST",
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"email\": \"vinicius_o_grande@gmail.com\",\r\n    \"password\": \"12345\"\r\n}",
+											"raw": "{\r\n    \"email\": \"kauangostosinho@gmail.com\",\r\n    \"password\": \"12345\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -189,7 +213,7 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "{{access_token}}",
+												"value": "Bearer {{access_token}}",
 												"type": "text"
 											}
 										],
@@ -206,6 +230,100 @@
 												"transaction"
 											]
 										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create Transaction",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{access_token}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"receiver\": \"kauangostoso@gmail.com\",\r\n    \"value\": 10.0\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5255/api/v1/transaction",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5255",
+											"path": [
+												"api",
+												"v1",
+												"transaction"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "wallet",
+							"item": [
+								{
+									"name": "Get balance",
+									"request": {
+										"method": "GET",
+										"header": []
+									},
+									"response": []
+								},
+								{
+									"name": "Withdraw",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{access_token}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"value\": 100.0\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5255/api/v1/wallet/withdraw",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5255",
+											"path": [
+												"api",
+												"v1",
+												"wallet",
+												"withdraw"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Deposit",
+									"request": {
+										"method": "GET",
+										"header": []
 									},
 									"response": []
 								}
