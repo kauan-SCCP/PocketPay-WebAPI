@@ -70,7 +70,7 @@ namespace pocketpay.Migrations
                     b.Property<Guid?>("AccountId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("CPNJ")
+                    b.Property<string>("CNPJ")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
@@ -92,13 +92,13 @@ namespace pocketpay.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("FromId")
+                    b.Property<Guid?>("FromId")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("TimeStamp")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("ToId")
+                    b.Property<Guid?>("ToId")
                         .HasColumnType("TEXT");
 
                     b.Property<double>("Value")
@@ -154,15 +154,11 @@ namespace pocketpay.Migrations
                 {
                     b.HasOne("AccountModel", "From")
                         .WithMany()
-                        .HasForeignKey("FromId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FromId");
 
                     b.HasOne("AccountModel", "To")
                         .WithMany()
-                        .HasForeignKey("ToId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ToId");
 
                     b.Navigation("From");
 

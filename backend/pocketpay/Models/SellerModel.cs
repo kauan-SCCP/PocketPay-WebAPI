@@ -10,5 +10,5 @@ public class SellerModel
     public AccountModel? Account {get; set;}
     public string? Name {get; set;}
     public string? Surname {get; set;}
-    public string? CPNJ {get; set;}
+    public string? CNPJ {get; set;}
 }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace pocketpay.Migrations
 {
     [DbContext(typeof(BankContext))]
-    [Migration("20230924185921_InitialTransactionCreate")]
-    partial class InitialTransactionCreate
+    [Migration("20231001174532_Final")]
+    partial class Final
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,15 +31,15 @@ namespace pocketpay.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Role")
-                        .HasColumnType("TEXT");
+                    b.Property<int?>("Role")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
                     b.ToTable("Account");
                 });
 
-            modelBuilder.Entity("UserModel", b =>
+            modelBuilder.Entity("ClientModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -61,10 +61,10 @@ namespace pocketpay.Migrations
 
                     b.HasIndex("AccountId");
 
-                    b.ToTable("User");
+                    b.ToTable("Client");
                 });
 
-            modelBuilder.Entity("VendorModel", b =>
+            modelBuilder.Entity("SellerModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -73,7 +73,7 @@ namespace pocketpay.Migrations
                     b.Property<Guid?>("AccountId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("CPNJ")
+                    b.Property<string>("CNPJ")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
@@ -86,7 +86,7 @@ namespace pocketpay.Migrations
 
                     b.HasIndex("AccountId");
 
-                    b.ToTable("Vendor");
+                    b.ToTable("Seller");
                 });
 
             modelBuilder.Entity("pocketpay.Models.TransactionModel", b =>
@@ -95,13 +95,13 @@ namespace pocketpay.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("FromId")
+                    b.Property<Guid?>("FromId")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("TimeStamp")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("ToId")
+                    b.Property<Guid?>("ToId")
                         .HasColumnType("TEXT");
 
                     b.Property<double>("Value")
@@ -135,7 +135,7 @@ namespace pocketpay.Migrations
                     b.ToTable("Wallet");
                 });
 
-            modelBuilder.Entity("UserModel", b =>
+            modelBuilder.Entity("ClientModel", b =>
                 {
                     b.HasOne("AccountModel", "Account")
                         .WithMany()
@@ -144,7 +144,7 @@ namespace pocketpay.Migrations
                     b.Navigation("Account");
                 });
 
-            modelBuilder.Entity("VendorModel", b =>
+            modelBuilder.Entity("SellerModel", b =>
                 {
                     b.HasOne("AccountModel", "Account")
                         .WithMany()
@@ -157,15 +157,11 @@ namespace pocketpay.Migrations
                 {
                     b.HasOne("AccountModel", "From")
                         .WithMany()
-                        .HasForeignKey("FromId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FromId");
 
                     b.HasOne("AccountModel", "To")
                         .WithMany()
-                        .HasForeignKey("ToId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ToId");
 
                     b.Navigation("From");
 
