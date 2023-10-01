@@ -50,7 +50,7 @@ public class CardRepository : ICardRepository
 
     public async Task<IEnumerable<CardModel>> FindAll()
     {
-        return await _context.Cards.ToListAsync();
+        return await _context.Cards.Include(card => card.Account).ToListAsync();
     }
 
     public async Task<CardModel?> FindById(Guid id)

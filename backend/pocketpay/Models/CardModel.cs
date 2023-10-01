@@ -9,7 +9,7 @@ public class CardModel
     public Guid Id {get; set;}
     public AccountModel? Account {get; set;}
     public string? OwnerName {get; set;}
-    public CardType? Type {get; set;}
+    public CardType Type {get; set;}
     public string? Number {get; set;}
     public string? CVV {get; set;}
     public string? ExpirationDate {get; set;}
