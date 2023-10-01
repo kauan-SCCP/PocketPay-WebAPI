@@ -34,8 +34,8 @@ public class CardRepository : ICardRepository
         var card = await FindById(id);
 
         if (card == null) {return null;}
-        
-        _context.Remove(card);
+
+        card.IsActive = false;
         await _context.SaveChangesAsync();
 
         return card;
