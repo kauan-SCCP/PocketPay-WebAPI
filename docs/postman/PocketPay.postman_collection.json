@@ -246,7 +246,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"receiver\": \"kauangostoso@gmail.com\",\r\n    \"value\": 10.0\r\n}",
+											"raw": "{\r\n    \"receiver\": \"corinthians@gmail.com\",\r\n    \"value\": 10.0\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -322,10 +322,184 @@
 								{
 									"name": "Deposit",
 									"request": {
-										"method": "GET",
-										"header": []
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{access_token}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"value\": 20.0\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5255/api/v1/wallet/deposit",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5255",
+											"path": [
+												"api",
+												"v1",
+												"wallet",
+												"deposit"
+											]
+										}
 									},
 									"response": []
+								}
+							]
+						},
+						{
+							"name": "payment",
+							"item": [
+								{
+									"name": "card",
+									"item": [
+										{
+											"name": "Get Cards",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{access_token}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "http://localhost:5255/api/v1/payment/card",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5255",
+													"path": [
+														"api",
+														"v1",
+														"payment",
+														"card"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Card Card Id",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{access_token}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "http://localhost:5255/api/v1/payment/card/:id",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5255",
+													"path": [
+														"api",
+														"v1",
+														"payment",
+														"card",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": ""
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Register Card",
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{access_token}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\r\n    \"type\": 1,\r\n    \"number\": \"12637862138\",\r\n    \"cvv\": \"123\",\r\n    \"expiration_date\": \"12/32\",\r\n    \"owner\": \"JOAO PEDRO O GRANDE\"\r\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:5255/api/v1/payment/card",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5255",
+													"path": [
+														"api",
+														"v1",
+														"payment",
+														"card"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Delete Card",
+											"request": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{access_token}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "http://localhost:5255/api/v1/payment/card/:id",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5255",
+													"path": [
+														"api",
+														"v1",
+														"payment",
+														"card",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "72455114-c674-4a73-b621-e07e6bae4bfb"
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									]
 								}
 							]
 						}
