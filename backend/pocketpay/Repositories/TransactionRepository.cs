@@ -6,11 +6,9 @@ using pocketpay.Models;
 public class TransactionRepository : ITransactionRepository
 {
     private BankContext _context;
-    private readonly WalletRepository _walletRepository;
     public TransactionRepository(BankContext context) 
     {
         _context = context;
-     
     }
 
     public async Task<TransactionModel> Create(AccountModel sender, AccountModel receiver, double value)
@@ -29,12 +27,14 @@ public class TransactionRepository : ITransactionRepository
         return newTransaction;
     }
 
-    public async Task<TransactionModel?> FindByAccount(AccountModel account)
+    public async Task<IEnumerable<TransactionModel>> FindByAccount(AccountModel account)
     {
         //Vai ser um HttpGet
         var transaction = await _context.Transactions // passa a tabela para a variavel
-            .Include(transaction => transaction.From) // me traga dessa tabela quem fez a transição
-            .FirstOrDefaultAsync(transaction => transaction.From == account); // na tabela tran busque pelo From, se for igual ao parametro é OK
+            .Include(transaction => transaction.From) // me traga dessa tabela quem fez a transiï¿½ï¿½o
+            .Include(transaction => transaction.To)
+            .Where(transaction => transaction.From == account)
+            .ToListAsync(); // na tabela tran busque pelo From, se for igual ao parametro ï¿½ OK
 
         return transaction;
     }
@@ -51,6 +51,7 @@ public class TransactionRepository : ITransactionRepository
     public async Task<IEnumerable<TransactionModel>> FindByReceiver(AccountModel receiver)
     {
         var transaction = await _context.Transactions
+            .Include(transaction => transaction.From)
             .Include(transaction => transaction.To)
             .Where(transaction => transaction.To == receiver)
             .ToListAsync();
@@ -62,6 +63,7 @@ public class TransactionRepository : ITransactionRepository
     {
         var transaction = await _context.Transactions
             .Include(transaction => transaction.From)
+            .Include(transaction => transaction.To)
             .Where(transaction => transaction.From == sender)
             .ToListAsync();
 

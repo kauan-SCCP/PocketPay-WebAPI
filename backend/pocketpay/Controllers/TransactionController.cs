@@ -25,39 +25,70 @@ public class TransactionController : ControllerBase
 
     public async Task<IActionResult> CreateTransaction(TransactionRegisterRequest request)
     {
-        var email = User.Identity.Name;
-        var account = await _accountRepository.FindByEmail(email);
-        var wallet = await _walletRepository.FindByAccount(account);
-        var receiver = await _accountRepository.FindByEmail(request.email_receiver);
+        if (request.email_receiver == null || request.value <= 0)
+        {
+            return BadRequest();
+        }
+        
+        if (User.Identity == null || User.Identity.Name == null)
+        {
+            return Forbid();
+        }
 
+        var sender = await _accountRepository.FindByEmail(User.Identity.Name);
+        if (sender == null)
+        {
+            return Forbid();
+        }
 
-        if (account == null || wallet.Balance < request.value || request.value <= 0)
+        var senderWallet = await _walletRepository.FindByAccount(sender);
+        if (senderWallet == null)
         {
             return BadRequest();
         }
 
-        var newTransaction = _transactionRepository.Create(account, receiver, request.value); //registro minha transação
-        await _walletRepository.Withdraw(wallet.Id, request.value); // pego qual é a minha carteira
+        if (senderWallet.Balance < request.value)
+        {
+            return Forbid();
+        }
+
+        var receiver = await _accountRepository.FindByEmail(request.email_receiver);
+        if (receiver == null)
+        {
+            return NotFound();
+        }
+
+        var newTransaction = _transactionRepository.Create(sender, receiver, request.value); //registro minha transação
+        await _walletRepository.Withdraw(senderWallet.Id, request.value); // pego qual é a minha carteira
+        
         var walletReceiver = await _walletRepository.FindByAccount(receiver); // pego a carteira do destinatario
-        _walletRepository.Deposit(walletReceiver.Id, request.value); // realizo o deposito
+        if (walletReceiver == null)
+        {
+            return NotFound();
+        }
+        
+        await _walletRepository.Deposit(walletReceiver.Id, request.value); // realizo o deposito
 
         return Ok();
     }
 
     [HttpGet("")]
     [Authorize]
-
-    public async Task<IActionResult> GerUserTransaction() 
+    public async Task<IActionResult> GetUserTransaction() 
     {
-        var email = User.Identity.Name;
-        var account = await _accountRepository.FindByEmail(email);
+        if (User.Identity == null || User.Identity.Name == null)
+        {
+            return Forbid();
+        }
+
+        var account = await _accountRepository.FindByEmail(User.Identity.Name);
 
         if (account == null)
         {
             return BadRequest();
         }
 
-        var AllTransaction = await _transactionRepository.FindBySender(account);
+        var AllTransaction = await _transactionRepository.FindByAccount(account);
         var responseBory = new List<TransactionResponse>();
 
         foreach (TransactionModel T in AllTransaction)
