@@ -246,7 +246,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"receiver\": \"kauangostoso@gmail.com\",\r\n    \"value\": 10.0\r\n}",
+											"raw": "{\r\n    \"email_receiver\": \"corinthians@gmail.com\",\r\n    \"value\": 15.0\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -322,8 +322,37 @@
 								{
 									"name": "Deposit",
 									"request": {
-										"method": "GET",
-										"header": []
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{access_token}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"value\": 20.0\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5255/api/v1/wallet/deposit",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5255",
+											"path": [
+												"api",
+												"v1",
+												"wallet",
+												"deposit"
+											]
+										}
 									},
 									"response": []
 								}
