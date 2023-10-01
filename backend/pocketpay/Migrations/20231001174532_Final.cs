@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace pocketpay.Migrations
 {
     /// <inheritdoc />
-    public partial class Refactor : Migration
+    public partial class Final : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

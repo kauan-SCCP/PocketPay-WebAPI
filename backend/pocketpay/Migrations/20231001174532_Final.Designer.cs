@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace pocketpay.Migrations
 {
     [DbContext(typeof(BankContext))]
-    [Migration("20230930225924_Refactor")]
-    partial class Refactor
+    [Migration("20231001174532_Final")]
+    partial class Final
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

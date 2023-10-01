@@ -69,7 +69,7 @@ public class TransactionController : ControllerBase
         
         await _walletRepository.Deposit(walletReceiver.Id, request.value); // realizo o deposito
 
-        return Ok();
+        return NoContent();
     }
 
     [HttpGet("")]
