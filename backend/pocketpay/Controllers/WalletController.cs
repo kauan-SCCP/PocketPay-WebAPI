@@ -9,11 +9,13 @@ public class WalletController : ControllerBase
 {
     private readonly IWalletRepository _walletRepository;
     private readonly IAccountRepository _accountRepository;
+    private readonly ICardRepository _cardRepository;
 
-    public WalletController(IWalletRepository walletRepository, IAccountRepository accountRepository)
+    public WalletController(IWalletRepository walletRepository, IAccountRepository accountRepository, ICardRepository cardRepository)
     {
         _walletRepository = walletRepository;
         _accountRepository = accountRepository;
+        _cardRepository = cardRepository;
     }
 
     [HttpGet("")]
@@ -40,22 +42,28 @@ public class WalletController : ControllerBase
         return Ok(responseBody);
     }
 
-
     [HttpPut("deposit")]
     [Authorize]
     public async Task<IActionResult> Deposit(WalletDepositRequest data)
     {
         var email = User.Identity.Name;
-        if (email == null || data.value == null || data.value <= 0)
+        var card = await _cardRepository.FindById(data.cardId);
+        if (email == null || data.value == null || data.value <= 0 || card == null)
         {
             return BadRequest();
         }
 
+        
+
+        CardPaymentService.Validate(card, (double)data.value);
+
         var account = await _accountRepository.FindByEmail(email);
-        if (account == null)
+        if (account == null || card.Account != account)
         {
             return BadRequest();
         }
+
+
         var wallet = await _walletRepository.FindByAccount(account);
         if (wallet == null)
         {

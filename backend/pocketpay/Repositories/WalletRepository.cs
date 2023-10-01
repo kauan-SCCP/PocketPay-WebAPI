@@ -36,9 +36,9 @@ public class WalletRepository : IWalletRepository
         return wallet;
     }
 
-    public async Task<WalletModel?> Deposit(Guid id, double value)
+    public async Task<WalletModel?> Deposit(Guid id_wallet, double value)
     {
-        var wallet = await FindById(id);
+        var wallet = await FindById(id_wallet);
         if (wallet == null) {return null;}
 
         wallet.Balance += value;
