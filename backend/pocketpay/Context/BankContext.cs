@@ -13,6 +13,7 @@ public class BankContext : DbContext
     public DbSet<TransactionModel> Transactions {get; set;}
 
     public DbSet<ExternalTransactionModel> ExternalTransactions {get; set;}
+    public DbSet<CardModel> Cards {get; set;}
 
     protected override void OnConfiguring(DbContextOptionsBuilder options) 
     {

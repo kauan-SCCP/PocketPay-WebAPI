@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.HttpSys;
 using pocketpay.DTOs.Transaction;
 using pocketpay.Models;
 using System.Security.Cryptography.Xml;
@@ -20,19 +21,22 @@ public class TransactionController : ControllerBase
         this._transactionRepository = transactionRepository;
     }
 
-    [HttpPost("")]
+    [HttpPost]
     [Authorize]
-
     public async Task<IActionResult> CreateTransaction(TransactionRegisterRequest request)
     {
-        var email = User.Identity.Name;
-        var account = await _accountRepository.FindByEmail(email);
+        if (request.receiver == null || request.value <= 0)
+        {
+            return BadRequest();
+        }
+        
+        var account = await _accountRepository.FindByEmail(User.Identity.Name);
         var wallet = await _walletRepository.FindByAccount(account);
-        var receiver = await _accountRepository.FindByEmail(request.email_receiver);
-
+        var receiver = await _accountRepository.FindByEmail(request.receiver);
 
         if (account == null || wallet.Balance < request.value || request.value <= 0)
         {
+            Console.WriteLine("assadas");
             return BadRequest();
         }
 
@@ -44,7 +48,7 @@ public class TransactionController : ControllerBase
         return Ok();
     }
 
-    [HttpGet("")]
+    [HttpGet]
     [Authorize]
 
     public async Task<IActionResult> GerUserTransaction() 
@@ -57,11 +61,11 @@ public class TransactionController : ControllerBase
             return BadRequest();
         }
 
-        var AllTransaction = await _transactionRepository.FindBySender(account);
+        var AllTransaction = await _transactionRepository.FindByAccount(account);
         var responseBory = new List<TransactionResponse>();
 
         foreach (TransactionModel T in AllTransaction)
-        {
+        {               
             var transaction = new TransactionResponse()
             {
                 receiverEmail = T.To.Email,
@@ -74,7 +78,4 @@ public class TransactionController : ControllerBase
         }
         return Ok(responseBory);
     }
-        
-
-
 }

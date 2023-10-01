@@ -20,6 +20,7 @@ builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<ISellerRepository, SellerRepository>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 builder.Services.AddScoped<IWalletRepository, WalletRepository>();
+builder.Services.AddScoped<ICardRepository, CardRepository>();
 
 // Configurando a autenticação
 var key = Encoding.ASCII.GetBytes(AuthenticationService.secret);

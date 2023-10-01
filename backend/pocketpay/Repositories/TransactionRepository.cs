@@ -29,12 +29,14 @@ public class TransactionRepository : ITransactionRepository
         return newTransaction;
     }
 
-    public async Task<TransactionModel?> FindByAccount(AccountModel account)
+    public async Task<IEnumerable<TransactionModel>> FindByAccount(AccountModel account)
     {
         //Vai ser um HttpGet
         var transaction = await _context.Transactions // passa a tabela para a variavel
-            .Include(transaction => transaction.From) // me traga dessa tabela quem fez a transição
-            .FirstOrDefaultAsync(transaction => transaction.From == account); // na tabela tran busque pelo From, se for igual ao parametro é OK
+            .Include(transaction => transaction.From) // me traga dessa tabela quem fez a transiï¿½ï¿½o
+            .Include(transaction => transaction.To)
+            .Where(transaction => transaction.From == account || transaction.To == account)
+            .ToListAsync(); // na tabela tran busque pelo From, se for igual ao parametro ï¿½ OK
 
         return transaction;
     }
