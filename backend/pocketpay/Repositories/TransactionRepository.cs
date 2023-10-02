@@ -33,7 +33,7 @@ public class TransactionRepository : ITransactionRepository
         var transaction = await _context.Transactions // passa a tabela para a variavel
             .Include(transaction => transaction.From) // me traga dessa tabela quem fez a transi��o
             .Include(transaction => transaction.To)
-            .Where(transaction => transaction.From == account)
+            .Where(transaction => transaction.From == account || transaction.To == account)
             .ToListAsync(); // na tabela tran busque pelo From, se for igual ao parametro � OK
 
         return transaction;
