@@ -77,7 +77,7 @@ public class WalletController : ControllerBase
     public async Task<IActionResult> Withdraw(WalletDepositRequest data)
     {
         var email = User.Identity.Name;
-        if (email == null || data.value == null)
+        if (email == null || data.value <= 0)
         {
             return BadRequest();
         }
