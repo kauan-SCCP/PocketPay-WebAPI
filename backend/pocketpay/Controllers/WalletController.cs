@@ -15,7 +15,7 @@ public class WalletController : ControllerBase
         _walletRepository = walletRepository;
         _accountRepository = accountRepository;
     }
-
+    
     [HttpGet("")]
     [Authorize]
     public async Task<IActionResult> GetUserWallet()
@@ -31,11 +31,11 @@ public class WalletController : ControllerBase
         {
             return BadRequest();
         }
-        var wallet =  _walletRepository.FindByAccount(account);
+        var wallet = await _walletRepository.FindByAccount(account);
 
         var responseBody = new WalletResponse()
         {
-            balance = wallet.Result.Balance
+            balance = wallet.Balance
         };
         return Ok(responseBody);
     }
@@ -61,13 +61,10 @@ public class WalletController : ControllerBase
         {
             return BadRequest();
         }
-
-        var walletSave = await _walletRepository.Deposit(wallet.Id, (double)data.value);
-        
-
+        var walletSaved = await _walletRepository.Deposit(wallet.Id, (double)data.value);
         var responseBody = new WalletResponse()
         {
-            balance = walletSave.Balance,
+            balance = walletSaved.Balance,
         };
         return Ok(responseBody);
     }
@@ -92,14 +89,11 @@ public class WalletController : ControllerBase
         {
             return BadRequest();
         }
-
         if (data.value > wallet.Balance)
         {
             return Forbid();
         }
-
         var walletSave = await _walletRepository.Withdraw(wallet.Id, (double)data.value);
-
         var responseBody = new WalletResponse()
         {
             balance = walletSave.Balance,
