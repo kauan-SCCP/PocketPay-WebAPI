@@ -69,7 +69,7 @@ public class WalletController : ControllerBase
         return Ok(responseBody);
     }
 
-    [HttpPut("withdraw")]
+    [HttpPost("withdraw")]
     [Authorize]
     public async Task<IActionResult> Withdraw(WalletDepositRequest data)
     {

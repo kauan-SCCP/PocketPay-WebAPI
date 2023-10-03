@@ -11,6 +11,7 @@ public class BankContext : DbContext
 
     public DbSet<WalletModel> Wallets {get; set;}
     public DbSet<TransactionModel> Transactions {get; set;}
+    public DbSet<WithdrawModel> Withdraws {get; set;}
 
     protected override void OnConfiguring(DbContextOptionsBuilder options) 
     {
