@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.ObjectPool;
 using pocketpay.DTOs.Transaction;
 using pocketpay.Models;
 using System.Security.Cryptography.Xml;
@@ -10,107 +11,80 @@ namespace pocketpay.Controllers;
 [Route("api/v1/transaction")]
 public class TransactionController : ControllerBase
 {
-    private readonly IAccountRepository _accountRepository;
-    private readonly IWalletRepository _walletRepository;
-    private readonly ITransactionRepository _transactionRepository;
-    public TransactionController(IAccountRepository accountRepository, IWalletRepository walletRepository, ITransactionRepository transactionRepository)
+    private readonly ITransactionRepository transactionRepository;
+    private readonly IAccountRepository accountRepository;
+
+    public TransactionController(ITransactionRepository transactionRepository, IAccountRepository accountRepository)
     {
-        this._accountRepository = accountRepository;
-        this._walletRepository = walletRepository;
-        this._transactionRepository = transactionRepository;
+        this.transactionRepository = transactionRepository;
+        this.accountRepository = accountRepository;
     }
 
-    [HttpPost("")]
+    [HttpGet]
     [Authorize]
-
-    public async Task<IActionResult> CreateTransaction(TransactionRegisterRequest request)
+    public async Task<IActionResult> GetTransactions()
     {
-        if (request.email_receiver == null || request.value <= 0)
+        if (User.Identity == null || User.Identity.Name == null )
         {
-            return BadRequest();
-        }
-        
-        if (User.Identity == null || User.Identity.Name == null)
-        {
-            return Forbid();
+            return StatusCode(500);
         }
 
-        var sender = await _accountRepository.FindByEmail(User.Identity.Name);
-        if (sender == null)
-        {
-            return Forbid();
-        }
-
-        var senderWallet = await _walletRepository.FindByAccount(sender);
-        if (senderWallet == null)
-        {
-            return BadRequest();
-        }
-
-        if (senderWallet.Balance < request.value)
-        {
-            return Forbid();
-        }
-
-        var receiver = await _accountRepository.FindByEmail(request.email_receiver);
-        if (receiver == null)
-        {
-            return NotFound();
-        }
-
-        var newTransaction = _transactionRepository.Create(sender, receiver, request.value); //registro minha transação
-        await _walletRepository.Withdraw(senderWallet.Id, request.value); // pego qual é a minha carteira
-        
-        var walletReceiver = await _walletRepository.FindByAccount(receiver); // pego a carteira do destinatario
-        if (walletReceiver == null)
-        {
-            return NotFound();
-        }
-        
-        await _walletRepository.Deposit(walletReceiver.Id, request.value); // realizo o deposito
-
-        return NoContent();
-    }
-
-    [HttpGet("")]
-    [Authorize]
-    public async Task<IActionResult> GetUserTransaction() 
-    {
-        if (User.Identity == null || User.Identity.Name == null)
-        {
-            return Forbid();
-        }
-
-        var account = await _accountRepository.FindByEmail(User.Identity.Name);
-
+        var account = await accountRepository.FindByEmail(User.Identity.Name);
         if (account == null)
         {
-            return BadRequest();
+            return StatusCode(500);
         }
 
-        var AllTransaction = await _transactionRepository.FindByAccount(account);
-        var responseBory = new List<TransactionResponse>();
+        var transactions = await transactionRepository.FindByOwner(account);
 
-        foreach (TransactionModel T in AllTransaction)
+        var responseBody = new List<TransactionResponse>();
+        
+        foreach (TransactionModel t in transactions)
         {
-            if (T.To == null || T.From == null || T.To.Email == null || T.From.Email == null)
+            var foundTransaction = new TransactionResponse()
             {
-                return StatusCode(500);
-            }
-            
-            var transaction = new TransactionResponse()
-            {
-                receiverEmail = T.To.Email,
-                timeStamp = T.TimeStamp,
-                senderEmail = T.From.Email,
-                value = T.Value
+                id = t.Id,
+                status = t.Status,
+                timestamp =  t.TimeStamp,
+                type = t.Type
             };
 
-            responseBory.Add(transaction);
+            responseBody.Add(foundTransaction);
         }
-        return Ok(responseBory);
+
+        return Ok(responseBody);
     }
-        
 
+    [HttpGet("{id}")]
+    [Authorize]
+    public async Task<IActionResult> GetTransactionById(Guid id)
+    {
+        if (User.Identity == null || User.Identity.Name == null )
+        {
+            return StatusCode(500);
+        }
 
+        var account = await accountRepository.FindByEmail(User.Identity.Name);
+        if (account == null)
+        {
+            return StatusCode(500);
+        }
+
+        var transaction = await transactionRepository.FindById(id);
+
+        if (transaction == null)
+        {
+            return NotFound();
+        }
+
+        var responseBody = new TransactionResponse()
+        {
+            id = transaction.Id,
+            status = transaction.Status,
+            timestamp = transaction.TimeStamp,
+            type = transaction.Type
+        };
+
+        return Ok(responseBody);
+    }
 }

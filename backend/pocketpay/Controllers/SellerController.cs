@@ -33,7 +33,7 @@ public class SellerController : ControllerBase
 
         var responseBody = new AuthResponse
         {
-            access_token = AuthenticationService.createToken(account)
+            access_token = AuthenticationService.CreateToken(account)
         };
 
         return Ok(responseBody);

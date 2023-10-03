@@ -10,30 +10,20 @@ public class TransactionRepository : ITransactionRepository
     {
         _context = context;
     }
-    public async Task<TransactionModel> Create(AccountModel sender, AccountModel receiver, double value)
-    {
-        //Vai ser um HttpPost - SaveChangesAsync();
-        var newTransaction = new TransactionModel();
-         
-        newTransaction.From = sender;
-        newTransaction.To = receiver;
-        newTransaction.Value = value;
-        newTransaction.TimeStamp = DateTime.UtcNow;
 
-        await _context.AddAsync(newTransaction);
+    public async Task<TransactionModel> Create(TransactionType type, AccountModel owner)
+    {
+        var transaction = new TransactionModel()
+        {
+            Id = new Guid(),
+            TimeStamp = DateTime.Now,
+            Status = TransactionStatus.Pending,
+            Type = type,
+            Owner = owner
+        };
+
+        await _context.AddAsync(transaction);
         await _context.SaveChangesAsync();
-
-        return newTransaction;
-    }
-
-    public async Task<IEnumerable<TransactionModel>> FindByAccount(AccountModel account)
-    {
-        //Vai ser um HttpGet
-        var transaction = await _context.Transactions // passa a tabela para a variavel
-            .Include(transaction => transaction.From) // me traga dessa tabela quem fez a transi��o
-            .Include(transaction => transaction.To)
-            .Where(transaction => transaction.From == account || transaction.To == account)
-            .ToListAsync(); // na tabela tran busque pelo From, se for igual ao parametro � OK
 
         return transaction;
     }
@@ -41,31 +31,19 @@ public class TransactionRepository : ITransactionRepository
     public async Task<TransactionModel?> FindById(Guid id)
     {
         var transaction = await _context.Transactions
-            .Include(transaction => transaction.Id)
-            .FirstOrDefaultAsync(transaction => transaction.Id == id);
+                .Include(transaction => transaction.Owner)
+                .FirstOrDefaultAsync(transaction => transaction.Id == id);
 
         return transaction;
     }
 
-    public async Task<IEnumerable<TransactionModel>> FindByReceiver(AccountModel receiver)
+    public async Task<IEnumerable<TransactionModel>> FindByOwner(AccountModel owner)
     {
-        var transaction = await _context.Transactions
-            .Include(transaction => transaction.From)
-            .Include(transaction => transaction.To)
-            .Where(transaction => transaction.To == receiver)
-            .ToListAsync();
+        var transactions = await _context.Transactions
+                .Include(transaction => transaction.Owner)
+                .Where(transaction => transaction.Owner == owner)
+                .ToArrayAsync();
 
-        return transaction;
-    }
-
-    public async Task<IEnumerable<TransactionModel>> FindBySender(AccountModel sender)
-    {
-        var transaction = await _context.Transactions
-            .Include(transaction => transaction.From)
-            .Include(transaction => transaction.To)
-            .Where(transaction => transaction.From == sender)
-            .ToListAsync();
-
-        return transaction;
+        return transactions;
     }
 }
