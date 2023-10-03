@@ -1,10 +1,9 @@
+using System.Security.Cryptography.X509Certificates;
 using pocketpay.Models;
 
 public interface ITransactionRepository
 {
-    public Task<TransactionModel> Create(AccountModel sender, AccountModel receiver, double value);
+    public Task<TransactionModel> Create(TransactionType type, AccountModel owner);
     public Task<TransactionModel?> FindById(Guid id);
-    public Task<IEnumerable<TransactionModel>> FindByAccount(AccountModel account);
-    public Task<IEnumerable<TransactionModel>> FindBySender(AccountModel sender);
-    public Task<IEnumerable<TransactionModel>> FindByReceiver(AccountModel receiver);
+    public Task<IEnumerable<TransactionModel>> FindByOwner(AccountModel owner);
 }
