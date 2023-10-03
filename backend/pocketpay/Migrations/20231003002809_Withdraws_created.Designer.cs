@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace pocketpay.Migrations
 {
     [DbContext(typeof(BankContext))]
-    [Migration("20231003030819_transactionRefactor")]
-    partial class transactionRefactor
+    [Migration("20231003002809_Withdraws_created")]
+    partial class Withdraws_created
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -133,6 +133,30 @@ namespace pocketpay.Migrations
                     b.ToTable("Wallet");
                 });
 
+            modelBuilder.Entity("pocketpay.Models.WithdrawModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("AccountId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("transactionId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<double>("value")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("transactionId");
+
+                    b.ToTable("Withdraw");
+                });
+
             modelBuilder.Entity("ClientModel", b =>
                 {
                     b.HasOne("AccountModel", "Account")
@@ -167,6 +191,21 @@ namespace pocketpay.Migrations
                         .HasForeignKey("AccountId");
 
                     b.Navigation("Account");
+                });
+
+            modelBuilder.Entity("pocketpay.Models.WithdrawModel", b =>
+                {
+                    b.HasOne("AccountModel", "Account")
+                        .WithMany()
+                        .HasForeignKey("AccountId");
+
+                    b.HasOne("pocketpay.Models.TransactionModel", "transaction")
+                        .WithMany()
+                        .HasForeignKey("transactionId");
+
+                    b.Navigation("Account");
+
+                    b.Navigation("transaction");
                 });
 #pragma warning restore 612, 618
         }

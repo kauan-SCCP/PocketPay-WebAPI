@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace pocketpay.Migrations
 {
     [DbContext(typeof(BankContext))]
-    partial class BankContextModelSnapshot : ModelSnapshot
+    [Migration("20231003001155_CreateDepositModel")]
+    partial class CreateDepositModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.11");
@@ -61,30 +64,6 @@ namespace pocketpay.Migrations
                     b.ToTable("Client");
                 });
 
-            modelBuilder.Entity("DepositModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("AccountId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("TransactionId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<double>("Value")
-                        .HasColumnType("REAL");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
-
-                    b.HasIndex("TransactionId");
-
-                    b.ToTable("Deposit");
-                });
-
             modelBuilder.Entity("SellerModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -116,21 +95,23 @@ namespace pocketpay.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("OwnerId")
+                    b.Property<Guid?>("FromId")
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("TimeStamp")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid?>("ToId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<double>("Value")
+                        .HasColumnType("REAL");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OwnerId");
+                    b.HasIndex("FromId");
+
+                    b.HasIndex("ToId");
 
                     b.ToTable("Transaction");
                 });
@@ -154,30 +135,6 @@ namespace pocketpay.Migrations
                     b.ToTable("Wallet");
                 });
 
-            modelBuilder.Entity("pocketpay.Models.WithdrawModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("AccountId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("transactionId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<double>("value")
-                        .HasColumnType("REAL");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
-
-                    b.HasIndex("transactionId");
-
-                    b.ToTable("Withdraw");
-                });
-
             modelBuilder.Entity("ClientModel", b =>
                 {
                     b.HasOne("AccountModel", "Account")
@@ -185,21 +142,6 @@ namespace pocketpay.Migrations
                         .HasForeignKey("AccountId");
 
                     b.Navigation("Account");
-                });
-
-            modelBuilder.Entity("DepositModel", b =>
-                {
-                    b.HasOne("AccountModel", "Account")
-                        .WithMany()
-                        .HasForeignKey("AccountId");
-
-                    b.HasOne("pocketpay.Models.TransactionModel", "Transaction")
-                        .WithMany()
-                        .HasForeignKey("TransactionId");
-
-                    b.Navigation("Account");
-
-                    b.Navigation("Transaction");
                 });
 
             modelBuilder.Entity("SellerModel", b =>
@@ -213,11 +155,17 @@ namespace pocketpay.Migrations
 
             modelBuilder.Entity("pocketpay.Models.TransactionModel", b =>
                 {
-                    b.HasOne("AccountModel", "Owner")
+                    b.HasOne("AccountModel", "From")
                         .WithMany()
-                        .HasForeignKey("OwnerId");
+                        .HasForeignKey("FromId");
 
-                    b.Navigation("Owner");
+                    b.HasOne("AccountModel", "To")
+                        .WithMany()
+                        .HasForeignKey("ToId");
+
+                    b.Navigation("From");
+
+                    b.Navigation("To");
                 });
 
             modelBuilder.Entity("pocketpay.Models.WalletModel", b =>
@@ -227,21 +175,6 @@ namespace pocketpay.Migrations
                         .HasForeignKey("AccountId");
 
                     b.Navigation("Account");
-                });
-
-            modelBuilder.Entity("pocketpay.Models.WithdrawModel", b =>
-                {
-                    b.HasOne("AccountModel", "Account")
-                        .WithMany()
-                        .HasForeignKey("AccountId");
-
-                    b.HasOne("pocketpay.Models.TransactionModel", "transaction")
-                        .WithMany()
-                        .HasForeignKey("transactionId");
-
-                    b.Navigation("Account");
-
-                    b.Navigation("transaction");
                 });
 #pragma warning restore 612, 618
         }
