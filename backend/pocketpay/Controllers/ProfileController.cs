@@ -17,38 +17,6 @@ public class ProfileController : ControllerBase
         this.sellerRepository = sellerRepository;
     }
 
-    public async Task<IActionResult> GetClientProfile(AccountModel account)
-    {
-        var client = await clientRepository.FindByAccount(account);
-        if (client == null) {return NotFound();}
-
-        var responsebody = new ClientProfileResponse()
-        {
-            name = client.Name,
-            surname = client.Surname,
-            cpf = client.CPF,
-            email = account.Email
-        };
-
-        return Ok(responsebody);
-    }
-
-    public async Task<IActionResult> GetSellerProfile(AccountModel account)
-    {
-        var seller = await sellerRepository.FindByAccount(account);
-        if (seller == null) {return NotFound();}
-
-        var responsebody = new SellerProfileResponse()
-        {
-            email = account.Email,
-            name = seller.Name,
-            surname = seller.Surname,
-            cnpj = seller.CNPJ
-        };
-
-        return Ok(responsebody);
-    }
-
     [HttpGet]
     [Authorize]
     public async Task<IActionResult> GetProfile()
@@ -64,12 +32,34 @@ public class ProfileController : ControllerBase
 
         if (User.IsInRole(AccountRole.Client.ToString()))
         {
-            return await GetClientProfile(account);
+            var client = await clientRepository.FindByAccount(account);
+            if (client == null) {return NotFound();}
+
+            var responsebody = new ClientProfileResponse()
+            {
+                name = client.Name,
+                surname = client.Surname,
+                cpf = client.CPF,
+                email = account.Email
+            };
+
+            return Ok(responsebody);
         } 
         
         else 
         {
-            return await GetSellerProfile(account);
+            var seller = await sellerRepository.FindByAccount(account);
+            if (seller == null) {return NotFound();}
+
+            var responsebody = new SellerProfileResponse()
+            {
+                email = account.Email,
+                name = seller.Name,
+                surname = seller.Surname,
+                cnpj = seller.CNPJ
+            };
+
+            return Ok(responsebody);
         }
     }
 }
