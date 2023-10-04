@@ -17,10 +17,11 @@ public class ProfileController : ControllerBase
         this.sellerRepository = sellerRepository;
     }
 
-    [HttpGet]
+    [HttpGet("")]
     [Authorize]
     public async Task<IActionResult> GetProfile()
     {
+
         if (User.Identity == null || User.Identity.Name == null)
         {
             return Forbid();
@@ -33,6 +34,7 @@ public class ProfileController : ControllerBase
         if (User.IsInRole(AccountRole.Client.ToString()))
         {
             var client = await clientRepository.FindByAccount(account);
+            
             if (client == null) {return NotFound();}
 
             var responsebody = new ClientProfileResponse()

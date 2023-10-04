@@ -1,4 +1,4 @@
 public class WithdrawResquest
 {
-    public double? value {get; set;}
+    public double value {get; set;}
 }

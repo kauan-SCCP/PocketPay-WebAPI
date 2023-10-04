@@ -16,8 +16,9 @@ public class LoggingMiddleware
         var method = context.Request.Method;
         var path = context.Request.Path;
         var userAgent = context.Request.Headers.UserAgent;
-
-        _logger.LogInformation("[{Timestamp}] {HttpMethod} {Path} - {UserAgent}", DateTime.UtcNow, method, path, userAgent);
+        var statusCode = context.Response.StatusCode;
+        
+        _logger.LogInformation("[{Timestamp}] ({StatusCode}) {HttpMethod} {Path} - {UserAgent}", DateTime.UtcNow, statusCode, method, path, userAgent);
 
         await _next(context);
     }

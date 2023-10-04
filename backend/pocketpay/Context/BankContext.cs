@@ -11,7 +11,7 @@ public class BankContext : DbContext
 
     public DbSet<WalletModel> Wallets {get; set;}
     public DbSet<TransactionModel> Transactions {get; set;}
-    public DbSet<TransferenceModels> Transferences {get; set;}
+    public DbSet<TransferenceModel> Transferences {get; set;}
     public DbSet<WithdrawModel> Withdraws {get; set;}
     public DbSet<DepositModel> Deposits {get; set;}
 

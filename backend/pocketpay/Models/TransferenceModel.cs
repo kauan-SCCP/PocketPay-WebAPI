@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace pocketpay.Models;
 
 [Table("Transferences")]
-public class TransferenceModels
+public class TransferenceModel
 {
     [Key]
     public Guid Id { get; set; }

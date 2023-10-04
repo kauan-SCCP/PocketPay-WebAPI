@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.IdentityModel.Tokens;
 using pocketpay.Repositories;
+using pocketpay.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,8 @@ builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<ISellerRepository, SellerRepository>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 builder.Services.AddScoped<IWalletRepository, WalletRepository>();
+builder.Services.AddScoped<IWithdrawRepository, WithdrawRepository>();
+builder.Services.AddScoped<ITransferenceRepository, TransferenceRepository>();
 
 // Configurando a autenticação
 var key = Encoding.ASCII.GetBytes(AuthenticationService.secret);

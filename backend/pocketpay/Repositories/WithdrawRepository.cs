@@ -15,7 +15,7 @@ public class WithdrawRepository : IWithdrawRepository
     {
         var newWithdraw = new WithdrawModel();
         newWithdraw.Id = new Guid();
-        newWithdraw.transaction = transaction;
+        newWithdraw.Transaction = transaction;
         newWithdraw.Account = account;
         newWithdraw.value = value;
         await _context.AddAsync(newWithdraw);
@@ -27,6 +27,7 @@ public class WithdrawRepository : IWithdrawRepository
     {
         var withdraw = await _context.Withdraws
             .Include(withdraw => withdraw.Account)
+            .Include(withdraw => withdraw.Transaction)
             .FirstOrDefaultAsync(withdraw => withdraw.Id == id);
 
         return withdraw;
@@ -36,7 +37,8 @@ public class WithdrawRepository : IWithdrawRepository
     {
         var withdraw = await _context.Withdraws
             .Include(withdraw => withdraw.Account)
-            .FirstOrDefaultAsync(withdraw => withdraw.transaction == transaction);
+            .Include(withdraw => withdraw.Transaction)
+            .FirstOrDefaultAsync(withdraw => withdraw.Transaction == transaction);
         return withdraw;
     }
 
@@ -44,6 +46,7 @@ public class WithdrawRepository : IWithdrawRepository
     {
         var withdraw = await _context.Withdraws
             .Include(withdraw => withdraw.Account)
+            .Include(withdraw => withdraw.Transaction)
             .Where(withdraw => withdraw.Account == account).ToListAsync();
 
         return withdraw;
