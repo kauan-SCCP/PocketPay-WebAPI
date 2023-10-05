@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace pocketpay.Migrations
 {
     [DbContext(typeof(BankContext))]
-    [Migration("20231001174532_Final")]
-    partial class Final
+    [Migration("20231003002133_CreatingDepositModel")]
+    partial class CreatingDepositModel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -62,6 +62,30 @@ namespace pocketpay.Migrations
                     b.HasIndex("AccountId");
 
                     b.ToTable("Client");
+                });
+
+            modelBuilder.Entity("DepositModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("AccountId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("TransactionId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<double>("Value")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("TransactionId");
+
+                    b.ToTable("Deposit");
                 });
 
             modelBuilder.Entity("SellerModel", b =>
@@ -142,6 +166,21 @@ namespace pocketpay.Migrations
                         .HasForeignKey("AccountId");
 
                     b.Navigation("Account");
+                });
+
+            modelBuilder.Entity("DepositModel", b =>
+                {
+                    b.HasOne("AccountModel", "Account")
+                        .WithMany()
+                        .HasForeignKey("AccountId");
+
+                    b.HasOne("pocketpay.Models.TransactionModel", "Transaction")
+                        .WithMany()
+                        .HasForeignKey("TransactionId");
+
+                    b.Navigation("Account");
+
+                    b.Navigation("Transaction");
                 });
 
             modelBuilder.Entity("SellerModel", b =>
