@@ -10,8 +10,8 @@ PocketPay é uma plataforma digital de transferências bancárias, onde comercia
 
 Dentro da plataforma, podemos ter duas contas:
 
-- _Seller_: vendedor dentro do PocketPay. Apenas recebe transferências, não faz.
-- _Client_: comprador dentro do PocketPay. Pode enviar e receber transferências.
+- _Seller_: vendedor dentro do PocketPay.
+- _Client_: comprador dentro do PocketPay.
 
 ### Principais funcionalidades
 
@@ -21,11 +21,8 @@ Dentro da plataforma, podemos ter duas contas:
 2. _Logar_ no applicativo;
 3. Sacar dinheiro da sua carteira;
 4. Receber dinheiro de outros usuários;
-
-#### Exclusivo dos Clients
-
-1. Depositar dinheiro na sua carteira;
-2. Transferir dinheiro para outros usuários;
+5. Depositar dinheiro na sua carteira;
+6. Transferir dinheiro para outros usuários;
 
 ### Tecnologias Utilizadas
 
