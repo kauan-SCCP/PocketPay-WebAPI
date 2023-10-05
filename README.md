@@ -15,14 +15,13 @@ Dentro da plataforma, podemos ter duas contas:
 
 ### Principais funcionalidades
 
-#### Sellers e Clients
-
 1. Se inscrever no PocketPay;
-2. _Logar_ no applicativo;
+2. _Logar_ no aplicativo;
 3. Sacar dinheiro da sua carteira;
-4. Receber dinheiro de outros usuários;
-5. Depositar dinheiro na sua carteira;
-6. Transferir dinheiro para outros usuários;
+4. Depositar dinheiro na sua carteira;
+5. Transferir dinheiro para outros usuários;
+6. Receber dinheiro de outros usuários;
+7. Consultar todas as suas transferências, saques e depósitos;
 
 ### Tecnologias Utilizadas
 

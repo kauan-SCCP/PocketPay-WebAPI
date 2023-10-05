@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "74e9fd55-ace0-4af6-98b2-19efbbbeec0f",
-		"name": "PocketPay",
+		"_postman_id": "7f8a225a-06ef-40e5-baa8-ec6ffe624199",
+		"name": "PocketPay Copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "27995767"
 	},
@@ -185,7 +185,7 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:5255/api/v1/users/profile",
+											"raw": "http://localhost:5255/api/v1/profile",
 											"protocol": "http",
 											"host": [
 												"localhost"
@@ -194,7 +194,6 @@
 											"path": [
 												"api",
 												"v1",
-												"users",
 												"profile"
 											]
 										}
@@ -278,7 +277,10 @@
 									"name": "Get balance",
 									"request": {
 										"method": "GET",
-										"header": []
+										"header": [],
+										"url": {
+											"raw": ""
+										}
 									},
 									"response": []
 								},

@@ -1,14 +1,5 @@
 # Guia do desenvolvedor
 
-## Funcionalidades
-
-De forma geral, o PocketPay permite:
-
-1. Criar novos usuários, sejam eles vendedores (Sellers) ou clientes (Clients);
-2. Autenticar-se na plataforma;
-3. Criar depósitos (Deposits) e saques (Withdraws);
-4. Criar transferências (Transferences) entre usuários da plataforma;
-
 ## ASP.NET Web API
 
 ### Criação de Usuários
@@ -43,14 +34,6 @@ Authorization: Bearer JzdWIiOiIxMjM0NTY3 [...]
 
 Transação é o tipo mais básico de operação bancária dentro do PocketPay. 
 Ela é usada para compor todas as outras transações.
-
-Cada transação possui um status atrelado, podendo ser:
-
-- **Pending**: transação pendente. Status padrão após a criação de uma transação.
-- **Approved**: transação aprovada para aplicação.
-- **Applied**: transação aplicada. 
-- **Rejected**: transação rejeitada.
-- **Reverted**: transação efetuada com sucesso, porém revertida (em casos de reembolso, por exemplo).
 
 ### Depósitos e Saques
 
