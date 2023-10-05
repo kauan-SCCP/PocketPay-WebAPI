@@ -65,6 +65,8 @@ public class TransferenceController : ControllerBase
         var account = await accountRepository.FindByEmail(User.Identity.Name);
         if (account == null) return StatusCode(500);
 
+        if (User.Identity.Name == data.receiver) return Unauthorized();
+
         var receiver = await accountRepository.FindByEmail(data.receiver);
         if (receiver == null) return BadRequest();
 
@@ -90,12 +92,5 @@ public class TransferenceController : ControllerBase
         };
 
         return Ok(responseBody);
-    }
-
-    [HttpPut]
-    [Authorize]
-    public async Task<IActionResult> Revert()
-    {
-        throw new NotImplementedException();
     }
 }

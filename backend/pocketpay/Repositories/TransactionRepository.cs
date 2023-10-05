@@ -17,7 +17,6 @@ public class TransactionRepository : ITransactionRepository
         {
             Id = new Guid(),
             TimeStamp = DateTime.Now,
-            Status = TransactionStatus.Pending,
             Type = type,
             Owner = owner
         };

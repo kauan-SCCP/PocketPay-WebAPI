@@ -84,16 +84,5 @@ namespace pocketpay.Repositories
 
             return transference;
         }
-
-        public async Task<TransferenceModel> Revert(TransferenceModel transference)
-        {
-            var transaction = transference.Transaction;
-            transaction.Status = TransactionStatus.Reverted;
-
-            _context.Update(transference);
-            await _context.SaveChangesAsync();
-
-            return transference;
-        }
     }
 }

@@ -28,7 +28,8 @@ public class DepositRepository : IDepositRepository
     public async Task<DepositModel?> FindById(Guid id)
     {
         var deposit = await _context.Deposits
-            .Include(deposit => deposit.Id)
+            .Include(deposit => deposit.Account)
+            .Include(deposit => deposit.Transaction)
             .FirstOrDefaultAsync(deposit => deposit.Id == id);
 
         return deposit;
@@ -37,6 +38,7 @@ public class DepositRepository : IDepositRepository
     public async Task<DepositModel?> FindByTransaction(TransactionModel transaction)
     {
         var deposit = await _context.Deposits
+            .Include(deposit => deposit.Account)
             .Include(deposit => deposit.Transaction)
             .FirstOrDefaultAsync(deposit => deposit.Transaction == transaction);
 
@@ -48,6 +50,7 @@ public class DepositRepository : IDepositRepository
     {
         var deposit = await _context.Deposits
             .Include(deposit => deposit.Account)
+            .Include(deposit => deposit.Transaction)
             .Where(deposit => deposit.Account == account).ToListAsync();
 
         return deposit;

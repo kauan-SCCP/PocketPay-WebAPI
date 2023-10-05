@@ -44,7 +44,6 @@ public class TransactionController : ControllerBase
             var foundTransaction = new TransactionResponse()
             {
                 id = t.Id,
-                status = t.Status,
                 timestamp =  t.TimeStamp,
                 type = t.Type
             };
@@ -80,7 +79,6 @@ public class TransactionController : ControllerBase
         var responseBody = new TransactionResponse()
         {
             id = transaction.Id,
-            status = transaction.Status,
             timestamp = transaction.TimeStamp,
             type = transaction.Type
         };

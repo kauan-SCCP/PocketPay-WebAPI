@@ -29,8 +29,6 @@ public class DepositController : ControllerBase
             return StatusCode(500);
         }
 
-        this.accountRepository.FindByEmail(User.Identity.Name);
-
         var account = await this.accountRepository.FindByEmail(User.Identity.Name);
 
         var deposits = await this.depositRepository.FindByAccount(account);
@@ -50,7 +48,8 @@ public class DepositController : ControllerBase
 
             responseBody.Add(foundDeposit);
         }
-        return Ok(responseBody);   
+        
+	return Ok(responseBody);   
     }
 
     [HttpPost]
@@ -58,11 +57,6 @@ public class DepositController : ControllerBase
 
     public async Task<IActionResult> Deposit(DepositRequest data)
     {
-        //Pegar a identidade do usuario
-        //pegar o valor do deposito
-        //Criar uma transação
-        //Criar um depósito
-        //Por o valor na carteira
 
         if (User.Identity == null || User.Identity.Name == null)
         {
@@ -77,12 +71,12 @@ public class DepositController : ControllerBase
 
         var wallet = await walletRepository.FindByAccount(account);
 
-        await walletRepository.Deposit(wallet.Id, data.value);
+        var updatedWallet = await walletRepository.Deposit(wallet.Id, data.value);
 
         var depositInfo = new
         {
-            TransactionId = transaction.Id,
-            DepositAmount = deposit.Account,
+            id = transaction.Id,
+            balance = updatedWallet.Balance,
         };
 
         return Ok(depositInfo);

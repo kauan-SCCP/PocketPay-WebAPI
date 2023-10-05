@@ -10,7 +10,6 @@ namespace pocketpay.Models
         public Guid Id {get; set;}
         public DateTime TimeStamp {get; set;}
         public TransactionType Type {get; set;}
-        public TransactionStatus Status {get; set;}
         public AccountModel? Owner {get; set;}
     }
 }

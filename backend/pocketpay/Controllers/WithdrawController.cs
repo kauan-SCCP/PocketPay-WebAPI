@@ -34,12 +34,12 @@ public class WithdrawController : ControllerBase
         var responseBody = new List<WithdrawResponse>();
         
         foreach (WithdrawModel w in withdraws)
-        {            
+        {                        
             var foundWithdraws = new WithdrawResponse()
             {
                 IdWithdraw = w.Id,
                 IdTransaction = w.Transaction.Id,
-                timestamp =  DateTime.Today,
+                timestamp =  w.Transaction.TimeStamp,
                 value = w.value
             };
             responseBody.Add(foundWithdraws);
@@ -64,18 +64,19 @@ public class WithdrawController : ControllerBase
         
         if (wallet == null) return StatusCode(500);
 
-        var transaction = await _transactionRepository.Create(TransactionType.Withdraw, account);
-        var withdraw = await _withdrawRepository.Create(account, transaction, data.value);
-        
         if (data.value > wallet.Balance) return Forbid();
 
+        var transaction = await _transactionRepository.Create(TransactionType.Withdraw, account);
+
+        var withdraw = await _withdrawRepository.Create(account, transaction, data.value);
+        
         await _walletRepository.Withdraw(wallet.Id, data.value);
         
         var responseBody = new WithdrawResponse()
         {
             IdWithdraw = withdraw.Id,
             IdTransaction = transaction.Id,
-            timestamp =  DateTime.Today,
+            timestamp =  transaction.TimeStamp,
             value = data.value
         };
 

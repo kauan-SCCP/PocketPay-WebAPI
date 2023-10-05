@@ -10,7 +10,5 @@ namespace pocketpay.Repositories.Interfaces
         public Task<IEnumerable<TransferenceModel>> FindByAccount(AccountModel account);
         public Task<IEnumerable<TransferenceModel>> FindBySender(AccountModel sender);
         public Task<IEnumerable<TransferenceModel>> FindByReceiver(AccountModel receiver);
-        public Task<TransferenceModel> Revert(TransferenceModel transference);
-
     }
 }
