@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "7f8a225a-06ef-40e5-baa8-ec6ffe624199",
-		"name": "PocketPay Copy",
+		"_postman_id": "74e9fd55-ace0-4af6-98b2-19efbbbeec0f",
+		"name": "PocketPay",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "27995767"
 	},
@@ -22,7 +22,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"name\": \"João\",\r\n    \"surname\": \"Pedro\",\r\n    \"cpf\": \"52634774661123\",\r\n    \"email\": \"ojoaopedro1717@gmail.com\",\r\n    \"password\": \"12345\"\r\n}",
+											"raw": "{\r\n    \"name\": \"Nome\",\r\n    \"surname\": \"Sobrenome\",\r\n    \"cpf\": \"111111111111\",\r\n    \"email\": \"client@email.com\",\r\n    \"password\": \"12345\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -65,7 +65,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"email\": \"ojoaopedro1717@gmail.com\",\r\n    \"password\": \"12346\"\r\n}",
+											"raw": "{\r\n    \"email\": \"client@email.com\",\r\n    \"password\": \"12345\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -101,7 +101,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"name\": \"Kauan\",\r\n    \"surname\": \"Gostosinho\",\r\n    \"cnpj\": \"219083920183902190321\",\r\n    \"email\": \"kauangostosinho@gmail.com\",\r\n    \"password\": \"12345\"\r\n}",
+											"raw": "{\r\n    \"name\": \"Nome\",\r\n    \"surname\": \"Sobrenome\",\r\n    \"cnpj\": \"99999999999\",\r\n    \"email\": \"seller@email.com\",\r\n    \"password\": \"12345\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -144,7 +144,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"email\": \"kauangostosinho@gmail.com\",\r\n    \"password\": \"12345\"\r\n}",
+											"raw": "{\r\n    \"email\": \"seller@email.com\",\r\n    \"password\": \"12345\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -206,7 +206,7 @@
 							"name": "transaction",
 							"item": [
 								{
-									"name": "Get User Transactions",
+									"name": "Get Transaction By Id",
 									"request": {
 										"method": "GET",
 										"header": [
@@ -217,7 +217,7 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:5255/api/v1/transaction",
+											"raw": "http://localhost:5255/api/v1/transaction/ab983c40-667f-4d80-935f-bcc86e22983c",
 											"protocol": "http",
 											"host": [
 												"localhost"
@@ -226,16 +226,17 @@
 											"path": [
 												"api",
 												"v1",
-												"transaction"
+												"transaction",
+												"ab983c40-667f-4d80-935f-bcc86e22983c"
 											]
 										}
 									},
 									"response": []
 								},
 								{
-									"name": "Create Transaction",
+									"name": "Get All Transactions",
 									"request": {
-										"method": "POST",
+										"method": "GET",
 										"header": [
 											{
 												"key": "Authorization",
@@ -243,15 +244,6 @@
 												"type": "text"
 											}
 										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\r\n    \"email_receiver\": \"corinthians@gmail.com\",\r\n    \"value\": 15.0\r\n}",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
 										"url": {
 											"raw": "http://localhost:5255/api/v1/transaction",
 											"protocol": "http",
@@ -277,17 +269,65 @@
 									"name": "Get balance",
 									"request": {
 										"method": "GET",
-										"header": [],
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{access_token}}",
+												"type": "text"
+											}
+										],
 										"url": {
-											"raw": ""
+											"raw": "http://localhost:5255/api/v1/wallet",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5255",
+											"path": [
+												"api",
+												"v1",
+												"wallet"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "withdraw",
+							"item": [
+								{
+									"name": "Get Withdraws",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{access_token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:5255/api/v1/withdraw",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5255",
+											"path": [
+												"api",
+												"v1",
+												"withdraw"
+											]
 										}
 									},
 									"response": []
 								},
 								{
-									"name": "Withdraw",
+									"name": "Create Withdraw",
 									"request": {
-										"method": "PUT",
+										"method": "POST",
 										"header": [
 											{
 												"key": "Authorization",
@@ -297,7 +337,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"value\": 100.0\r\n}",
+											"raw": "{\n    \"value\": 400.0\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -305,7 +345,7 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:5255/api/v1/wallet/withdraw",
+											"raw": "http://localhost:5255/api/v1/withdraw",
 											"protocol": "http",
 											"host": [
 												"localhost"
@@ -314,8 +354,39 @@
 											"path": [
 												"api",
 												"v1",
-												"wallet",
 												"withdraw"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "deposit",
+							"item": [
+								{
+									"name": "Get Deposits",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{access_token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:5255/api/v1/deposit",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5255",
+											"path": [
+												"api",
+												"v1",
+												"deposit"
 											]
 										}
 									},
@@ -324,7 +395,7 @@
 								{
 									"name": "Deposit",
 									"request": {
-										"method": "PUT",
+										"method": "POST",
 										"header": [
 											{
 												"key": "Authorization",
@@ -334,7 +405,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"value\": 20.0\r\n}",
+											"raw": "{\n    \"value\": 1000\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -342,7 +413,7 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:5255/api/v1/wallet/deposit",
+											"raw": "http://localhost:5255/api/v1/deposit",
 											"protocol": "http",
 											"host": [
 												"localhost"
@@ -351,8 +422,75 @@
 											"path": [
 												"api",
 												"v1",
-												"wallet",
 												"deposit"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "transference",
+							"item": [
+								{
+									"name": "Get Transferences",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{access_token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:5255/api/v1/transference",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5255",
+											"path": [
+												"api",
+												"v1",
+												"transference"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create Transference",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{access_token}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"receiver\": \"client@email.com\",\n    \"value\": 100.0\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5255/api/v1/transference",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5255",
+											"path": [
+												"api",
+												"v1",
+												"transference"
 											]
 										}
 									},
