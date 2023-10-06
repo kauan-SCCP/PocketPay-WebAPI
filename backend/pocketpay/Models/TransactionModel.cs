@@ -7,10 +7,9 @@ namespace pocketpay.Models
     public class TransactionModel
     {
         [Key]
-        public Guid Id { get; set; }
-        public AccountModel? From { get; set; } //eu
-        public AccountModel? To { get; set; } // quem recebe   
-        public DateTime TimeStamp { get; set; }
-        public double Value { get; set; }
+        public Guid Id {get; set;}
+        public DateTime TimeStamp {get; set;}
+        public TransactionType Type {get; set;}
+        public AccountModel? Owner {get; set;}
     }
 }

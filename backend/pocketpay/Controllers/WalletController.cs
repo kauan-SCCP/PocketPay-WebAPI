@@ -15,7 +15,7 @@ public class WalletController : ControllerBase
         _walletRepository = walletRepository;
         _accountRepository = accountRepository;
     }
-
+    
     [HttpGet("")]
     [Authorize]
     public async Task<IActionResult> GetUserWallet()
@@ -31,78 +31,11 @@ public class WalletController : ControllerBase
         {
             return BadRequest();
         }
-        var wallet =  _walletRepository.FindByAccount(account);
-
-        var responseBody = new WalletResponse()
-        {
-            balance = wallet.Result.Balance
-        };
-        return Ok(responseBody);
-    }
-
-
-    [HttpPut("deposit")]
-    [Authorize]
-    public async Task<IActionResult> Deposit(WalletDepositRequest data)
-    {
-        var email = User.Identity.Name;
-        if (email == null || data.value == null || data.value <= 0)
-        {
-            return BadRequest();
-        }
-
-        var account = await _accountRepository.FindByEmail(email);
-        if (account == null)
-        {
-            return BadRequest();
-        }
-        var wallet = await _walletRepository.FindByAccount(account);
-        if (wallet == null)
-        {
-            return BadRequest();
-        }
-
-        var walletSave = await _walletRepository.Deposit(wallet.Id, (double)data.value);
-        
-
-        var responseBody = new WalletResponse()
-        {
-            balance = walletSave.Balance,
-        };
-        return Ok(responseBody);
-    }
-
-    [HttpPut("withdraw")]
-    [Authorize]
-    public async Task<IActionResult> Withdraw(WalletDepositRequest data)
-    {
-        var email = User.Identity.Name;
-        if (email == null || data.value == null)
-        {
-            return BadRequest();
-        }
-        var account = await _accountRepository.FindByEmail(email);
-        if (account == null)
-        {
-            return BadRequest();
-        }
         var wallet = await _walletRepository.FindByAccount(account);
 
-        if (wallet == null)
-        {
-            return BadRequest();
-        }
-
-        if (data.value > wallet.Balance)
-        {
-            return Forbid();
-        }
-
-        var walletSave = await _walletRepository.Withdraw(wallet.Id, (double)data.value);
-
         var responseBody = new WalletResponse()
         {
-            balance = walletSave.Balance,
+            balance = wallet.Balance
         };
         return Ok(responseBody);
     }

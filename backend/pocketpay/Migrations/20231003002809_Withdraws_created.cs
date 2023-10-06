@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace pocketpay.Migrations
 {
     /// <inheritdoc />
-    public partial class Final : Migration
+    public partial class Withdraws_created : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -70,22 +70,17 @@ namespace pocketpay.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    FromId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    ToId = table.Column<Guid>(type: "TEXT", nullable: true),
                     TimeStamp = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Value = table.Column<double>(type: "REAL", nullable: false)
+                    Type = table.Column<int>(type: "INTEGER", nullable: false),
+                    Status = table.Column<int>(type: "INTEGER", nullable: false),
+                    OwnerId = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Transaction", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Transaction_Account_FromId",
-                        column: x => x.FromId,
-                        principalTable: "Account",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Transaction_Account_ToId",
-                        column: x => x.ToId,
+                        name: "FK_Transaction_Account_OwnerId",
+                        column: x => x.OwnerId,
                         principalTable: "Account",
                         principalColumn: "Id");
                 });
@@ -108,6 +103,30 @@ namespace pocketpay.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Withdraw",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    transactionId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    AccountId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    value = table.Column<double>(type: "REAL", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Withdraw", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Withdraw_Account_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "Account",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Withdraw_Transaction_transactionId",
+                        column: x => x.transactionId,
+                        principalTable: "Transaction",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Client_AccountId",
                 table: "Client",
@@ -119,19 +138,24 @@ namespace pocketpay.Migrations
                 column: "AccountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transaction_FromId",
+                name: "IX_Transaction_OwnerId",
                 table: "Transaction",
-                column: "FromId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Transaction_ToId",
-                table: "Transaction",
-                column: "ToId");
+                column: "OwnerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Wallet_AccountId",
                 table: "Wallet",
                 column: "AccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Withdraw_AccountId",
+                table: "Withdraw",
+                column: "AccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Withdraw_transactionId",
+                table: "Withdraw",
+                column: "transactionId");
         }
 
         /// <inheritdoc />
@@ -144,10 +168,13 @@ namespace pocketpay.Migrations
                 name: "Seller");
 
             migrationBuilder.DropTable(
-                name: "Transaction");
+                name: "Wallet");
 
             migrationBuilder.DropTable(
-                name: "Wallet");
+                name: "Withdraw");
+
+            migrationBuilder.DropTable(
+                name: "Transaction");
 
             migrationBuilder.DropTable(
                 name: "Account");
