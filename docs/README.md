@@ -104,6 +104,8 @@ Transação é o tipo mais básico de operação bancária dentro do PocketPay. 
 
 Toda transação possui um dono (Owner) e uma data de criação (Timestamp).
 
+Obs: **uma transação nunca é criada sozinha.** Sempre é necessário atrelar ela a alguma operação.
+
 ### Depósitos 
 
 #### Endpoints
