@@ -1,6 +1,6 @@
 # PocketPay
 
-> Trabalho da matéria de Desenvolvimento de Software Visual, inspirado no desafio PicPay.
+> ⚠️ Esse repositório faz parte do projeto PocketPay, e contém apenas a WebAPI (_backend_). Acesse o _frontend_ [aqui](https://github.com/entr0pie/PocketPay-Angular).  
 
 ## O que é o PocketPay?
 
