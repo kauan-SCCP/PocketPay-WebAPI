@@ -9,7 +9,7 @@ PocketPay é uma plataforma digital de transferências bancárias, onde comercia
 ## Documentação
 
 - [_Overview_ do Projeto](./docs/README.md)
-- [Google Drive com os vídeos de explicação](./docs/README.md)
+- [Google Drive com os vídeos de explicação](https://drive.google.com/drive/folders/1C_cdGY2bY28JBGAwspZUTWZZh3vxEnzv)
 
 ## Autores e Créditos
 
