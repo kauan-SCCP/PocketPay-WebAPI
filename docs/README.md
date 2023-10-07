@@ -165,15 +165,9 @@ Para transferir para outro usuário, deve-se informar o endereço de email e o v
 
 ### Tecnologias Utilizadas
 
-#### Backend
-
 1. [Dotnet](https://dotnet.microsoft.com/pt-br/)
 2. [ASP.NET](https://dotnet.microsoft.com/pt-br/apps/aspnet)
 3. [Entity Framework](https://learn.microsoft.com/pt-br/ef/)
 4. [JWT (JSON Web Token)](https://jwt.io/)
 4. [SQLite3](https://www.sqlite.org/index.html)
 5. [Bcrypt](https://pt.wikipedia.org/wiki/Bcrypt)
-
-#### Frontend
-
-1. [Angular](https://angular.io/) 
