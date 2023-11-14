@@ -1,8 +1,21 @@
 # Documentação PocketPay
 
+## Índice
+
+- [Escopo](#escopo)
+- [Funcionalidades](#funcionalidades)
+- [Links Úteis](#links-úteis)
+- [Estrutura do Projeto](#estrutura-do-projeto)
+  - [Criação de Usuários](#criação-de-usuários)
+  - [Autenticação e Autorização](#autenticação-e-autorização)
+  - [Transações](#transações)
+  - [Depósitos](#depósitos)
+  - [Saques](#saques)
+  - [Transferências](#transferências)
+
 ## Escopo
 
-Um aplicativo bancário onde pessoas físicas e jurídicas possam sacar, depositar e fazer transferências entre si.
+Uma WebAPI onde pessoas físicas e jurídicas possam sacar, depositar e fazer transferências entre si.
 
 ## Funcionalidades
 
@@ -104,6 +117,8 @@ Transação é o tipo mais básico de operação bancária dentro do PocketPay. 
 
 Toda transação possui um dono (Owner) e uma data de criação (Timestamp).
 
+Obs: **uma transação nunca é criada sozinha.** Sempre é necessário atrelar ela a alguma operação.
+
 ### Depósitos 
 
 #### Endpoints
@@ -147,3 +162,12 @@ Após receber algumas transferências (ou após estar de saco cheio do PocketPay
 Aqui reside o charme do PocketPay - as transferências. Dentro da plataforma, os usuários poderão trasnferir dinheiro uns para os outros (independente do tipo da conta!). Da mesma forma que no saque, os usuários somente poderão realizá-la se tiverem dinheiro suficiente em conta.
 
 Para transferir para outro usuário, deve-se informar o endereço de email e o valor desejado.
+
+### Tecnologias Utilizadas
+
+1. [Dotnet](https://dotnet.microsoft.com/pt-br/)
+2. [ASP.NET](https://dotnet.microsoft.com/pt-br/apps/aspnet)
+3. [Entity Framework](https://learn.microsoft.com/pt-br/ef/)
+4. [JWT (JSON Web Token)](https://jwt.io/)
+4. [SQLite3](https://www.sqlite.org/index.html)
+5. [Bcrypt](https://pt.wikipedia.org/wiki/Bcrypt)

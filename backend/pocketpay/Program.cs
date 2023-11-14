@@ -26,6 +26,8 @@ builder.Services.AddScoped<IWithdrawRepository, WithdrawRepository>();
 builder.Services.AddScoped<ITransferenceRepository, TransferenceRepository>();
 builder.Services.AddScoped<IDepositRepository, DepositRepository>();
 
+builder.Services.AddCors();
+
 // Configurando a autenticação
 var key = Encoding.ASCII.GetBytes(AuthenticationService.secret);
 
@@ -50,6 +52,9 @@ var app = builder.Build();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseCors(options => {
+    options.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+});
 
 app.UseMiddleware<LoggingMiddleware>();
 

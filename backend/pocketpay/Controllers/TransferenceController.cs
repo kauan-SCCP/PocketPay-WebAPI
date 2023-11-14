@@ -70,13 +70,14 @@ public class TransferenceController : ControllerBase
         var receiver = await accountRepository.FindByEmail(data.receiver);
         if (receiver == null) return BadRequest();
 
-        var transaction = await transactionRepository.Create(TransactionType.Transference, account);
-        var transference = await transferenceRepository.Create(transaction, account, receiver, data.value);
-
         var walletSender = await walletRepository.FindByAccount(account);
         var walletReceiver = await walletRepository.FindByAccount(receiver);
 
         if (walletSender == null || walletReceiver == null) return StatusCode(500);
+        if (walletSender.Balance <= 0) return Unauthorized();
+
+        var transaction = await transactionRepository.Create(TransactionType.Transference, account);
+        var transference = await transferenceRepository.Create(transaction, account, receiver, data.value);
 
         await walletRepository.Withdraw(walletSender.Id, data.value);
         await walletRepository.Deposit(walletReceiver.Id, data.value);
