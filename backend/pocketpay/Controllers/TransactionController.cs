@@ -41,11 +41,24 @@ public class TransactionController : ControllerBase
         
         foreach (TransactionModel t in transactions)
         {
+            string _type;
+            if (t.Type == TransactionType.Deposit)
+            {
+                _type = "Deposit";
+            } else if(t.Type == TransactionType.Transference)
+            {
+                _type = "Transference";
+            } else if(t.Type == TransactionType.Withdraw)
+            {
+                _type = "Withdraw";
+            }else {
+                _type = "null";
+            };
             var foundTransaction = new TransactionResponse()
             {
                 id = t.Id,
                 timestamp =  t.TimeStamp,
-                type = t.Type
+                type = _type
             };
 
             responseBody.Add(foundTransaction);
@@ -75,12 +88,25 @@ public class TransactionController : ControllerBase
         {
             return NotFound();
         }
+        string _type;
+            if (transaction.Type == TransactionType.Deposit)
+            {
+                _type = "Deposit";
+            } else if(transaction.Type == TransactionType.Transference)
+            {
+                _type = "Transference";
+            } else if(transaction.Type == TransactionType.Withdraw)
+            {
+                _type = "Withdraw";
+            }else {
+                _type = "null";
+            };
 
         var responseBody = new TransactionResponse()
         {
             id = transaction.Id,
             timestamp = transaction.TimeStamp,
-            type = transaction.Type
+            type = _type
         };
 
         return Ok(responseBody);
